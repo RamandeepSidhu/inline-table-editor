@@ -1,0 +1,146 @@
+<div class="row">
+  <div class="col-12">
+    <div class="mb-3 float-right">
+      <button
+        class="btn btn-success btn-sm createButton"
+        (click)="addNewRecord()"
+      >
+        <span class="material-icons create-icon">add</span>Add New Record
+      </button>
+    </div>
+    <div class="card table-responsive">
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th class="text-center border-action">Action</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Linedin</th>
+          <th>Country</th>
+          <th>Platform </th>
+          <th>Lead Score </th>
+          <th>Conversion </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let user of usersArray; let i = index">
+          <td class="text-center border-action">
+            <div *ngIf="user.isEdit">
+              <button class="btn btn-sm btn-success statusBtn" (click)="onEdit(user)">
+                <span class="material-icons check_circle">check_circle</span>
+              </button>
+              <button class="btn btn-sm btn-danger statusBtn" (click)="removeRecord()">
+                <span class="material-icons cancel">cancel</span>
+              </button>
+            </div>
+            <div *ngIf="!user.isEdit">
+              <button class="btn btn-sm btn-success statusBtn" (click)="onEdit(user)">
+                <span class="material-icons check_circle" >edit</span>
+              </button>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <input type="text" [(ngModel)]="user.name" class="form-control" />
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.name }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <input
+                type="text"
+                [(ngModel)]="user.email"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.email }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <input
+                type="text"
+                [(ngModel)]="user.phone"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.phone }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <input
+                type="text"
+                [(ngModel)]="user.linkedin"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.linkedin }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <select class="form-control"  [(ngModel)]="user.country">
+                <option value="">Choose Country</option>
+                <option value="london">London</option>
+                <option value="us">US</option>
+                <option value="india">India</option>
+
+              </select>
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.country }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <select class="form-control" [(ngModel)]="user.platform">
+                <option value="" selected>Choose Platform</option>
+                <option value="linkedin">linkedin</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Instragram">Instragram</option>
+              </select>
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.platform }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <select class="form-control" [(ngModel)]="user.lead_score">
+                <option value="">Choose Lead Score</option>
+                <option value="1">10</option>
+                <option value="2">20</option>
+                <option value="3">30</option>
+
+              </select>
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.lead_score }}
+            </div>
+          </td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <select class="form-control" [(ngModel)]="user.conversion">
+                <option value="">Choose Conversion</option>
+                <option value="1">Admin</option>
+                <option value="2">Client</option>
+
+              </select>
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.conversion }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
