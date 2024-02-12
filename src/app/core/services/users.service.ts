@@ -48,7 +48,13 @@ export class UserService {
         }
         return this.http.post<any>(`${this.apiUrl}/manage`, data, { params });
     }
-    getByIdManageUser(type: String, id: string): Observable<any> {
+    updateManageUser(data: any, type: String): Observable<any> {
+        const params:any = {
+            type
+        }
+        return this.http.put<any>(`${this.apiUrl}/manage`, data, { params });
+    }
+    getByIdManageUser(type: String, id: any): Observable<any> {
         const params:any = {
             type
         }
