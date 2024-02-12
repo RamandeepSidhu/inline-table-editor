@@ -5,15 +5,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { InlineEditingOneComponent } from './pages/inline-editing-one/inline-editing-one.component';
-import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
 import {MatIconModule} from '@angular/material/icon';
+import { LoginComponent } from './login/login.component';
+import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InlineEditingOneComponent,
-    NavBarComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +21,8 @@ import {MatIconModule} from '@angular/material/icon';
     ReactiveFormsModule,  
     FormsModule,
     HttpClientModule,
-    MatIconModule
+    MatIconModule,
+    AdminDashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
