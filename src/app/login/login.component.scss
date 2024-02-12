@@ -1,0 +1,115 @@
+@import '../../assets/styles/index.scss';
+
+.containers.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .sign-in {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .form-label {
+    font-size: 16px;
+    color: #555;
+    justify-content: left;
+    display: flex;
+    font-weight: 500;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+  }
+  .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 10px;
+    vertical-align: text-bottom;
+  }
+
+  .eye-icon {
+    position: absolute;
+    right: 27px;
+    top: 70%; 
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  button.btn.submit-button {
+    border-radius: 27px;
+  }
+
+  // Media Queries for Responsiv
+  @media screen and (max-width: 768px) {
+    .containers.login-form {
+      .col-6 {
+        max-width: 90%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .containers.login-form {
+      .col-6 {
+        max-width: 95%;
+      }
+    }
+
+    .form-label {
+      font-size: 14px;
+    }
+
+    .form-control {
+      font-size: 14px;
+    }
+  }
+  .separator {
+    color: $primary-color;
+    margin: 0 auto 20px;
+    width: 240px;
+    position: relative;
+    text-align: center;
+    &::after,
+    &::before {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40%;
+      border: 1px solid $primary-color;
+      content: ' ';
+      display: block;
+    }
+    &::after {
+      right: 0;
+    }
+    &::before {
+      left: 0;
+    }
+  }
+}
