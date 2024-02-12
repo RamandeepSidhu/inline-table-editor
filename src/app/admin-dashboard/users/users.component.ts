@@ -75,6 +75,7 @@ export class UsersComponent  implements OnInit {
 }
 
 updateUser(user: any, index: number) {
+  this.updateSubmitted = false;
   if (!this.registrationForm.valid) {
     this.users[index].isDisabled = false;
     user.isEdit = true;
@@ -167,5 +168,8 @@ updateUser(user: any, index: number) {
     this.isAddingNewRecord = true;
     this.initForm();
   }
-  
+  cancel(){
+    this.isAddingNewRecord = false;
+    this.initForm();
+  }
 }
