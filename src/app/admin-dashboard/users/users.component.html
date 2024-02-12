@@ -24,18 +24,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr  *ngFor="let user of usersArray; let i = index">
+          <tr  *ngFor="let user of users; let i = index">
             <td class="text-center border-action">
-              <div *ngIf="user.isEdit">
-                <button class="btn btn-sm btn-success statusBtn" (click)="onEdit(user)">
+              <div *ngIf="isEdit">
+                <button class="btn btn-sm btn-success statusBtn" (click)="userEdit(user,i)">
                   <span class="material-icons check_circle">check_circle</span>
                 </button>
-                <button class="btn btn-sm btn-danger statusBtn" (click)="removeRecord()">
+                <button class="btn btn-sm btn-danger statusBtn" (click)="deleteUser(user,i)">
                   <span class="material-icons cancel">cancel</span>
                 </button>
               </div>
-              <div *ngIf="!user.isEdit">
-                <button class="btn btn-sm btn-success statusBtn" (click)="onEdit(user)">
+              <div *ngIf="!isEdit">
+                <button class="btn btn-sm btn-success statusBtn" (click)="userEdit(user,i)">
                   <span class="material-icons check_circle" >edit</span>
                 </button>
               </div>

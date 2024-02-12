@@ -33,7 +33,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     let headers = new HttpHeaders({
       accept: 'application/json',
       'Access-Control-Allow-Origin': '"*"',
-      token: `${authorization}`
+      token:`${authorization}`
     });
 
     if (!request.headers.has('Content-Type')) {
