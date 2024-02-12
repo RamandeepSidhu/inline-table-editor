@@ -2,9 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+interface LoginPayload {
+    username: string;
+}  
 @Injectable({
     providedIn: 'root'
 })
+
 export class UserService {
     private apiUrl = `${environment.apiUrl}/api`;
 
@@ -30,5 +34,18 @@ export class UserService {
     }
     dashborad(): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/dashboard`);
+    }
+
+    getManageUser(params:any): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/manage`,{ params:params });
+    }
+    storeManageUser(params:any,data:any): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/manage`,data,{ params:params });
+    }
+    getByIdManageUser(params:any,id:string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/manage/${id}`,{ params:params });
+    }
+    deleteManageUser(params:any,id:string): Observable<any> {
+        return this.http.delete<any>(`${this.apiUrl}/manage/${id}`,{ params:params });
     }
 }

@@ -5,11 +5,13 @@ import { UsersComponent } from './users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { HeaderComponent } from './header/header.component';
+import { ManageComponent } from './manage/manage.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
     UsersComponent,
     HeaderComponent,
+    ManageComponent,
   ],
   imports: [
     CommonModule,
