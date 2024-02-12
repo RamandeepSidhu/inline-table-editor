@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 interface LoginPayload {
     username: string;
-}  
+}
 @Injectable({
     providedIn: 'root'
 })
@@ -13,8 +13,8 @@ export class UserService {
     private apiUrl = `${environment.apiUrl}/api`;
 
     constructor(private http: HttpClient) { }
-    getUsers(params?:any): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/users`,{ params:params });
+    getUsers(params?: any): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/users`, { params: params });
     }
 
     getByIdUers(id: any) {
@@ -36,16 +36,28 @@ export class UserService {
         return this.http.get<any>(`${this.apiUrl}/dashboard`);
     }
 
-    getManageUser(params:any): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/manage`,{ params:params });
+    getManageUser(type: String): Observable<any> {
+        const params:any = {
+            type
+        }
+        return this.http.get<any>(`${this.apiUrl}/manage`, { params: params });
     }
-    storeManageUser(params:any,data:any): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/manage`,data,{ params:params });
+    storeManageUser(data: any, type: String): Observable<any> {
+        const params:any = {
+            type
+        }
+        return this.http.post<any>(`${this.apiUrl}/manage`, data, { params });
     }
-    getByIdManageUser(params:any,id:string): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/manage/${id}`,{ params:params });
+    getByIdManageUser(type: String, id: string): Observable<any> {
+        const params:any = {
+            type
+        }
+        return this.http.get<any>(`${this.apiUrl}/manage/${id}`, { params: params });
     }
-    deleteManageUser(params:any,id:string): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/manage/${id}`,{ params:params });
+    deleteManageUser(type: String, id: String): Observable<any> {
+        const params:any = {
+            type
+        }
+        return this.http.delete<any>(`${this.apiUrl}/manage/${id}`, { params: params });
     }
 }
