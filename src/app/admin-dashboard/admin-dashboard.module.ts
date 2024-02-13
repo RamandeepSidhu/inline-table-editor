@@ -10,6 +10,9 @@ import { ClientComponent } from './client/client.component';
 import { ShimmerComponent } from './shimmer/shimmer.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { DisableControlDirective } from './disabled-form';
+import { DemoMaterialModule } from './material-module';
 
 @NgModule({
   declarations: [
@@ -19,16 +22,23 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ManageComponent,
     ClientComponent,
     ShimmerComponent,
+    DisableControlDirective,
+    
   ],
   imports: [
     CommonModule,
     AdminDashboardRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTableModule,
-    MatPaginatorModule
+    DemoMaterialModule
+    // MatTableModule,
+    // MatPaginatorModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: []
+  exports: [],
+  providers:[
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+
+  ]
 })
 export class AdminDashboardModule { }
