@@ -7,6 +7,7 @@ import { AdminDashboardComponent } from './admin-dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { ManageComponent } from './manage/manage.component';
 import { ClientComponent } from './client/client.component';
+import { ShimmerComponent } from './shimmer/shimmer.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -14,6 +15,7 @@ import { ClientComponent } from './client/client.component';
     HeaderComponent,
     ManageComponent,
     ClientComponent,
+    ShimmerComponent,
   ],
   imports: [
     CommonModule,
