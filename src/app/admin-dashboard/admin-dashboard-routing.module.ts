@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { ManageComponent } from './manage/manage.component';
+import { ClientComponent } from './client/client.component';
 const routes: Routes = [
   {
     path: '',
@@ -11,6 +12,7 @@ const routes: Routes = [
       { path: 'dashboard', component: UsersComponent },
       { path: 'manage', component: ManageComponent },
       { path: 'users', component: UsersComponent },
+      { path: 'client', component: ClientComponent },
       { path: '**', redirectTo: 'dashboard' }
     ]
   }

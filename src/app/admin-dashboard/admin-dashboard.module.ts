@@ -8,6 +8,9 @@ import { HeaderComponent } from './header/header.component';
 import { ManageComponent } from './manage/manage.component';
 import { ClientComponent } from './client/client.component';
 import { ShimmerComponent } from './shimmer/shimmer.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 @NgModule({
   declarations: [
     AdminDashboardComponent,
@@ -22,6 +25,8 @@ import { ShimmerComponent } from './shimmer/shimmer.component';
     AdminDashboardRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: []
