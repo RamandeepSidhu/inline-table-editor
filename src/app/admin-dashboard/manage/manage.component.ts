@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/users.service';
 declare var $: any;
@@ -10,8 +11,9 @@ declare var $: any;
   styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent {
-  public rows:any;
-  public title:String ='Country';
+  public rows: any;
+  public id: String = '';
+  public title: String = 'Country';
   public form!: FormGroup;
   public data: any = [];
   public isLoading = false;
@@ -20,6 +22,7 @@ export class ManageComponent {
     private userServices: UserService,
     private toaster: ToastrService,
     private formBuilder: FormBuilder,
+    private sanitizer: DomSanitizer
   ) { }
   ngOnInit(): void {
     this.getData(this.title);
@@ -28,12 +31,15 @@ export class ManageComponent {
     });
   }
 
+  generateRows(): void {
+  }
+
   tabClick(tab: string) {
     this.title = tab;
     this.getData(tab);
   }
 
-  getData(params=this.title) {
+  getData(params = this.title) {
     this.isLoading = true;
     try {
       this.userServices.getManageUser(params).subscribe(
@@ -41,90 +47,94 @@ export class ManageComponent {
           if (response.status === true) {
             this.isLoading = false;
             this.data = response.data;
-            this.tableData();
+            this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
           }
         });
     } catch (error) {
       this.isLoading = false;
     }
   }
-  getByIdUsers(userId: any) {
-    this.userServices.getByIdManageUser(userId,this.title).subscribe((response: any) => {
-      console.log(response);
-    });
-  }
-  tableData() {
-    this.rows = `<div class="card table-responsive">
-          <table class="table table-sm table-hover">
-              <thead>
-                  <tr>
-                      <th>Sl No.</th> 
-                      <th>Title</th>
-                      <th>Action</th>
-                  </tr>
-              </thead>
-              <tbody>
-            ${this.data.map((user:any, index:any) => `
-              <tr>
-                <td>${index + 1}</td>
-                <td>${user.title}</td>
-                <td>
-                <button type="button" (click)="updateManageUser(${index})">  
-                              <span class="material-icons check_circle" >edit</span>
-                </button>
-                </td>
-              </tr>`).join('')}
-          </tbody>
-          </table>
-    </div>`
 
+  ngAfterViewInit() {
+    (window as any).viewData = this.viewData.bind(this);
+    (window as any).manageDelete = this.manageDelete.bind(this);
   }
-  updateManageUser(index:any){
-    console.log('Edit clicked for index:', index);
-    const payload = this.form.value;
-    // if (this.data) {
-    //   console.log(this.data);
-    //   this.submitted = false;
-    //   const id = this.data._id;
-    //   this.userServices.updateManageUser(payload,id).subscribe(
-    //     (response: any) => {
-    //       if (response.status === true) {
-    //         this.toaster.success(response.message, 'Success');
-    //       }
-    //       else{
-    //         this.toaster.error(response.message, 'Error');
-    //       }
-    //       this.isLoading = false;
-    //       this.form.reset();
-    //       $('#newRecord').modal('hide');
-    //       this.getData(this.title);   
-    //     }
-    //   );
-    // }
 
+  tableData(): string {
+    return `<div class="card table-responsive">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th>Sl No.</th>
+            <th>Title</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${this.data.map((item: any, index: any) => `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${item.title}</td>
+              <td>
+               <button type="button" onClick="viewData(${index})">edit</button>
+               <button type="button" onClick="manageDelete(${index})">Delete</button>
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
   }
+
+  viewData(index: any) {
+    const item = this.data[index];
+    this.id = item._id;
+    this.form.get('title')?.patchValue(item.title);
+    $('#newRecord').modal('show');
+  }
+
   onSubmit() {
     this.isLoading = true;
     this.submitted = true;
     const payload = this.form.value;
-      if (!this.form.valid) {
-        return;
-      }
-      const type:String=this.title;
-      this.userServices.storeManageUser(payload,type).subscribe(
-       (response: any) => {
-         if (response.status === true) {
-           this.submitted = false;
-           this.toaster.success(response.message, 'Success');
-           this.isLoading = false;
-           this.form.reset();
-           $('#newRecord').modal('hide');
-           this.getData(this.title);   
-         }
-         else{
-           this.toaster.error(response.message, 'Error');
-         }
-       },
-     );
+    if (!this.form.valid) {
+      this.toaster.warning("The title field is required", 'Warning');
+      return;
     }
+    const type: String = this.title;
+    this.userServices.storeAndUpdateManageUser(payload, type, this.id).subscribe(
+      (response: any) => {
+        if (response.status === true) {
+          this.submitted = false;
+          this.id = '';
+          this.toaster.success(response.message, 'Success');
+          this.isLoading = false;
+          this.form.reset();
+          $('#newRecord').modal('hide');
+          this.getData(this.title);
+        }
+        else {
+          this.toaster.error(response.message, 'Error');
+        }
+      },
+    );
+  }
+
+  manageDelete(index:number) {
+    const id = this.data[index]._id;
+    this.isLoading = true;
+    this.userServices.deleteManageUser(this.title,id).subscribe(
+      (response: any) => {
+        if (response.status === true) {
+          this.toaster.success(response.message, 'Success');
+          this.data.splice(index, 1);
+          this.isLoading = false;
+          this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
+        }
+        else {
+          this.isLoading = false;
+          this.toaster.error(response.message, 'Error');
+        }
+      },
+    );
+  }
 }

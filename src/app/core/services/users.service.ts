@@ -42,17 +42,14 @@ export class UserService {
         }
         return this.http.get<any>(`${this.apiUrl}/manage`, { params: params });
     }
-    storeManageUser(data: any, type: String): Observable<any> {
+    storeAndUpdateManageUser(data: any, type: String,id?:String): Observable<any> {
         const params:any = {
             type
+        }
+        if(id){
+            return this.http.put<any>(`${this.apiUrl}/manage/${id}`, data, { params });
         }
         return this.http.post<any>(`${this.apiUrl}/manage`, data, { params });
-    }
-    updateManageUser(data: any, type: String): Observable<any> {
-        const params:any = {
-            type
-        }
-        return this.http.put<any>(`${this.apiUrl}/manage`, data, { params });
     }
     getByIdManageUser(type: String, id: any): Observable<any> {
         const params:any = {
