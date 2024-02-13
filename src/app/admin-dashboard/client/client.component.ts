@@ -9,60 +9,73 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/core/services/users.service';
 
 export interface PeriodicElement {
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  email: string;
+  phone: string;
+  linkedin: string;
+  plateform:string;
+  lead_score:string;
+  country:string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  { position: 11, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss'],
 })
 export class ClientComponent implements AfterViewInit {
-  displayedColumns: string[] = [
-    'position',
-    'name',
-    'weight',
-    'symbol',
-    'action',
-  ];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  paginatorList!: HTMLCollectionOf<Element>;
+  idx!: number;
   dataSource:any = new MatTableDataSource<any>();
   isLoading = true;
   pageNumber: number = 1;
   VOForm!: FormGroup;
   isEditableNew: boolean = true;
-  constructor(private fb: FormBuilder, private _formBuilder: FormBuilder) {}
+  public users: any = [];
+  public countries: any = [];
+  public leadScores: any = [];
+  public plateforms: any = [];
+  displayedColumns: string[] = [
+    'email',
+    'name',
+    'phone',
+    'linkedin',
+    'plateform',
+    'lead_score',
+    'country',
+    'action',
+  ];
+  constructor(private fb: FormBuilder, private _formBuilder: FormBuilder, private userServices: UserService,
+    private toaster: ToastrService,
+    private route: Router,
+    private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
+    this.getManageData();
+    this.getUsers();
     this.VOForm = this._formBuilder.group({
       VORows: this._formBuilder.array([]),
     });
+  }
 
+  formload (){
     this.VOForm = this.fb.group({
       VORows: this.fb.array(
-        ELEMENT_DATA.map((val) =>
+        this.users.map((val:any) =>
           this.fb.group({
-            position: new FormControl(val.position),
+            email: new FormControl(val.email),
+            plateform: new FormControl(val.plateform),
+            lead_score: new FormControl(val.lead_score),
+            country: new FormControl(val.country),
+            linkedin: new FormControl(val.linkedin),
             name: new FormControl(val.name),
-            weight: new FormControl(val.weight),
-            symbol: new FormControl(val.symbol),
+            phone: new FormControl(val.phone),
             action: new FormControl('existingRecord'),
             isEditable: new FormControl(true),
             isNewRow: new FormControl(false),
@@ -75,14 +88,28 @@ export class ClientComponent implements AfterViewInit {
       (this.VOForm.get('VORows') as FormArray).controls
     );
     this.dataSource.paginator = this.paginator;
-
     const filterPredicate = this.dataSource.filterPredicate;
     this.dataSource.filterPredicate = (data: AbstractControl, filter:any) => {
       return filterPredicate.call(this.dataSource, data.value, filter);
     };
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+
+  getUsers(params?: any) {
+    this.isLoading = true;
+    try {
+      this.userServices.getUsers(params).subscribe((response: any) => {
+        if (response.status === true) {
+          this.users = response.data;
+          this.isLoading = false;
+          this.formload();
+        }
+      });
+    } catch (error) {
+      this.isLoading = false;
+    }
+  }
 
   goToPage() {
     this.paginator.pageIndex = this.pageNumber - 1;
@@ -93,6 +120,7 @@ export class ClientComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit() {
+    
     this.dataSource.paginator = this.paginator;
     this.paginatorList = document.getElementsByClassName(
       'mat-paginator-range-label'
@@ -134,8 +162,6 @@ export class ClientComponent implements AfterViewInit {
     VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
   }
 
-  paginatorList!: HTMLCollectionOf<Element>;
-  idx!: number;
   onPaginateChange(paginator: MatPaginator, list: HTMLCollectionOf<Element>) {
     setTimeout(
       (idx:any) => {
@@ -162,14 +188,41 @@ export class ClientComponent implements AfterViewInit {
 
   initiateVOForm(): FormGroup {
     return this.fb.group({
-      position: new FormControl(234),
+      email: new FormControl(''),
+      linkedin: new FormControl(''),
+      country: new FormControl(''),
+      plateform: new FormControl(''),
+      lead_score: new FormControl(''),
       name: new FormControl(''),
-      weight: new FormControl(''),
-      symbol: new FormControl(''),
+      phone: new FormControl(''),
       action: new FormControl('newRecord'),
       isEditable: new FormControl(false),
       isNewRow: new FormControl(true),
     });
   }
+
+
+  getManageData() {
+    try {
+      this.userServices.getManageUser('country').subscribe((response: any) => {
+        if (response.status === true) {
+          this.countries = response.data;
+        }
+      });
+      this.userServices.getManageUser('leadscore').subscribe((response: any) => {
+        if (response.status === true) {
+          this.leadScores = response.data;
+        }
+      });
+      this.userServices.getManageUser('platform').subscribe((response: any) => {
+        if (response.status === true) {
+          this.plateforms = response.data;
+        }
+      });
+    } catch (error) {
+      this.isLoading = false;
+    }
+  }
+
   
 }
