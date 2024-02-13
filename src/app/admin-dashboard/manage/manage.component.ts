@@ -48,7 +48,11 @@ export class ManageComponent {
       this.isLoading = false;
     }
   }
-
+  getByIdUsers(userId: any) {
+    this.userServices.getByIdManageUser(userId,this.title).subscribe((response: any) => {
+      console.log(response);
+    });
+  }
   tableData() {
     this.rows = `<div class="card table-responsive">
           <table class="table table-sm table-hover">
@@ -65,12 +69,38 @@ export class ManageComponent {
                 <td>${index + 1}</td>
                 <td>${user.title}</td>
                 <td>
-                <span class="material-icons check_circle" (click)="editUser(${index})">edit</span>
-              </td>
+                <button type="button" (click)="updateManageUser(${index})">  
+                              <span class="material-icons check_circle" >edit</span>
+                </button>
+                </td>
               </tr>`).join('')}
           </tbody>
           </table>
     </div>`
+
+  }
+  updateManageUser(index:any){
+    console.log('Edit clicked for index:', index);
+    const payload = this.form.value;
+    // if (this.data) {
+    //   console.log(this.data);
+    //   this.submitted = false;
+    //   const id = this.data._id;
+    //   this.userServices.updateManageUser(payload,id).subscribe(
+    //     (response: any) => {
+    //       if (response.status === true) {
+    //         this.toaster.success(response.message, 'Success');
+    //       }
+    //       else{
+    //         this.toaster.error(response.message, 'Error');
+    //       }
+    //       this.isLoading = false;
+    //       this.form.reset();
+    //       $('#newRecord').modal('hide');
+    //       this.getData(this.title);   
+    //     }
+    //   );
+    // }
 
   }
   onSubmit() {
@@ -81,21 +111,20 @@ export class ManageComponent {
         return;
       }
       const type:String=this.title;
-       this.userServices.storeManageUser(payload,type).subscribe(
-        (response: any) => {
-          if (response.status === true) {
-            this.submitted = false;
-            this.toaster.success(response.message, 'Success');
-            this.isLoading = false;
-            this.form.reset();
-            $('#newRecord').modal('hide');
-            this.getData(this.title);   
-          }
-          else{
-            this.toaster.error(response.message, 'Error');
-          }
-        },
-      );
-  }
-  
+      this.userServices.storeManageUser(payload,type).subscribe(
+       (response: any) => {
+         if (response.status === true) {
+           this.submitted = false;
+           this.toaster.success(response.message, 'Success');
+           this.isLoading = false;
+           this.form.reset();
+           $('#newRecord').modal('hide');
+           this.getData(this.title);   
+         }
+         else{
+           this.toaster.error(response.message, 'Error');
+         }
+       },
+     );
+    }
 }
