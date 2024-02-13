@@ -223,5 +223,13 @@ export class ClientComponent implements AfterViewInit {
     }
   }
 
+
+  addNewRecord(VOFormElement: any, i: any) {
+    console.log(i);
+    console.log(VOFormElement.get('VORows').at(i).value,'VOFormElement')
+    // alert('SaveVO')
+    // VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
+  }
+
   
 }
