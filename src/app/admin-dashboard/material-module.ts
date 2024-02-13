@@ -90,7 +90,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatTreeModule,
     OverlayModule,
     PortalModule,
-    ScrollingModule,
-  ]
+    ScrollingModule  ]
 })
 export class DemoMaterialModule {}

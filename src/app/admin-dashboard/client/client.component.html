@@ -1,27 +1,28 @@
-<div class="mat-elevation-z8">
+<div class="container-fluid">
+  <div class="mat-elevation-z2">
     <button>
         <mat-icon (click)="AddNewRow()" class="add-button">add_box</mat-icon>
     </button>
     <br />
-    <mat-form-field style="width: 40%">
+    <mat-form-field style="width: 40%" [ngClass]="{'edit-mode':'true'}">
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
     </mat-form-field>
-    <mat-form-field style="width: 20%; float: right">
+    <mat-form-field style="width: 20%; float: right" [ngClass]="{'edit-mode': pageNumber}">
         <mat-label>Go to Page</mat-label>
         <input matInput type="number" placeholder="Enter page number" [(ngModel)]="pageNumber"
             (ngModelChange)="goToPage()" />
     </mat-form-field>
     <form [formGroup]="VOForm" autocomplete="off">
         <ng-container formArrayName="VORows">
-            <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
                 <!-- Email Column -->
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef>Email</th>
                     <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element"
                         [class.disabled-row]="VOForm.get('VORows')?.value[i].isEditable">
                         <mat-form-field style="border: none;">
-                            <input matInput type="text" formControlName="email" [readonly]="true"
+                            <input matInput type="text" formControlName="email"  [readonly]="true"
                                 style="border: none; outline: none;" />
                         </mat-form-field>
                     </td>
@@ -30,10 +31,11 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>Name</th>
                     <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                        <mat-form-field [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable"
+                        <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}" [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable"
                             [class.legacy-appearance]="!VOForm.get('VORows')?.value[i].isEditable">
                             <input matInput type="text" formControlName="name"
-                                [readonly]="VOForm.get('VORows')?.value[i].isEditable" />
+                                [readonly]="VOForm.get('VORows')?.value[i].isEditable"
+                                />
                         </mat-form-field>
                         <!-- </span> -->
                     </td>
@@ -42,7 +44,7 @@
                 <ng-container matColumnDef="phone">
                     <th mat-header-cell *matHeaderCellDef>Phone</th>
                     <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                        <mat-form-field [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable"
+                        <mat-form-field [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable" [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}"
                             [class.legacy-appearance]="!VOForm.get('VORows')?.value[i].isEditable">
                             <input matInput type="text" formControlName="phone"
                                 [readonly]="VOForm.get('VORows')?.value[i].isEditable" />
@@ -53,7 +55,7 @@
                 <ng-container matColumnDef="linkedin">
                     <th mat-header-cell *matHeaderCellDef>Linkedin</th>
                     <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                        <mat-form-field [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable"
+                        <mat-form-field [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable" [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}"
                             [class.legacy-appearance]="!VOForm.get('VORows')?.value[i].isEditable">
                             <input matInput type="text" formControlName="linkedin"
                                 [readonly]="VOForm.get('VORows')?.value[i].isEditable" />
@@ -65,7 +67,7 @@
                 <ng-container matColumnDef="country">
                     <th mat-header-cell *matHeaderCellDef>Country</th>
                     <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                        <mat-form-field>
+                        <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}">
                             <mat-select [disabled]="VOForm.get('VORows')?.value[i].isEditable"
                                  [(ngModal)]="VOForm.get('VORows')?.value[i].country">
                                 <mat-option *ngFor="let item of countries;let i=index"
@@ -78,7 +80,7 @@
                 <ng-container matColumnDef="plateform">
                     <th mat-header-cell *matHeaderCellDef>Plateform</th>
                     <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                        <mat-form-field>
+                        <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}">
                             <mat-select [disabled]="VOForm.get('VORows')?.value[i].isEditable"
                                 formControlName="plateform">
                                 <mat-option *ngFor="let item of plateforms;let i=index"
@@ -92,7 +94,7 @@
                 <ng-container matColumnDef="lead_score">
                     <th mat-header-cell *matHeaderCellDef>leadScore</th>
                     <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                        <mat-form-field>
+                        <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}">
                             <mat-select [disabled]="VOForm.get('VORows')?.value[i].isEditable"
                                 formControlName="lead_score">
                                 <mat-option *ngFor="let item of leadScores;let i=index"
@@ -140,4 +142,5 @@
     </mat-card>
     <mat-paginator [pageSizeOptions]="[5, dataSource.data.length>8? dataSource.data.length:''  ]" showFirstLastButtons>
     </mat-paginator>
+</div>
 </div>
