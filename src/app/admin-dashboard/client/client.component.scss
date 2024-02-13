@@ -1,31 +1,4 @@
-table {
-  width: 100%;
-}
-
-.mat-paginator-range-label {
-    display: none;
-}
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
-
-.mat-form-field-appearance-outline .mat-form-field-outline {
-  color: rgb(255, 255, 255);
-}
-input.mat-input-element {
-  color: rgb(0, 0, 0);
-}
-.custom-disabled-row {
-  background-color: transparent; 
-}
-
-.custom-disabled-row:hover {
-  background-color: initial;
-}
-
-.disabled-row input {
-  outline: none;
+.addNewRow{
+border: none;
+background-color: transparent;
 }
