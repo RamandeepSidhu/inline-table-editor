@@ -76,8 +76,8 @@ export class ManageComponent {
               <td>${index + 1}</td>
               <td>${item.title}</td>
               <td>
-               <button type="button" onClick="viewData(${index})">edit</button>
-               <button type="button" onClick="manageDelete(${index})">Delete</button>
+               <button type="button" style="border:0; background:transparent"  onClick="viewData(${index})"><span class="material-icons">edit</span></button>
+               <button type="button"  style="border:0; background:transparent" onClick="manageDelete(${index})"><span class="material-icons">delete_forever</span></button>
               </td>
             </tr>`).join('')}
         </tbody>

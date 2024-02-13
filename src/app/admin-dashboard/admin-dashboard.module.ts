@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { ManageComponent } from './manage/manage.component';
+import { ShimmerComponent } from './shimmer/shimmer.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
     UsersComponent,
     HeaderComponent,
     ManageComponent,
+    ShimmerComponent,
   ],
   imports: [
     CommonModule,
