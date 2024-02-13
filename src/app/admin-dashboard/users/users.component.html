@@ -1,5 +1,22 @@
 <div class="row">
   <div class="col-12">
+
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><span class="dropdown-text"> Select Options</span>
+      <span class="caret"></span></button>
+      <div class="dropdown-menu">
+        <form class="px-4">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="dropdownCheck">
+            <label class="form-check-label" for="dropdownCheck">
+              Remember me
+            </label>
+          </div>
+        </form>
+       
+      </div>
+    </div>
     <div class="mb-3 float-right">
       <button class="btn btn-success btn-sm createButton" (click)="addNewRecord()">
         <span class="material-icons create-icon">add</span>Add New Record </button>
