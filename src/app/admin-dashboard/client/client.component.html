@@ -33,13 +33,16 @@
         <!-- Position Column -->
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef>No.</th>
-          <td
-            mat-cell
-            *matCellDef="let element; let i = index"
-            [formGroup]="element"
-          >
-          <mat-form-field style="width: 200px; border: none; background-color: transparent; border-bottom: none;">
-            <input matInput type="text" formControlName="position" [readonly]="true" />
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" [class.disabled-row]="VOForm.get('VORows')?.value[i].isEditable">
+          <mat-form-field style="border: none;">
+            <input
+              matInput
+              type="text"
+              formControlName="position"
+              [readonly]="true"
+                style="border: none; outline: none;"
+              
+            />
           </mat-form-field>
           
             </td
@@ -54,7 +57,7 @@
             [formGroup]="element"
           >
             <mat-form-field
-              style="width: 70px"
+              style="" 
               [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable"
               [class.legacy-appearance]="!VOForm.get('VORows')?.value[i].isEditable"              >
               <input
@@ -76,10 +79,8 @@
             *matCellDef="let element; let i = index"
             [formGroup]="element"
           >
-            <!-- [appearance]="true ? 'outline': 'fill'" -->
-            <!-- <span [hidden]="VOForm.get('VORows').value[i].isEditable"> -->
             <mat-form-field
-              style="width: 70px"
+              style=""
               [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable"
               [class.legacy-appearance]="!VOForm.get('VORows')?.value[i].isEditable"    
                         >
@@ -102,7 +103,7 @@
             [formGroup]="element"
           >
             <mat-form-field
-              style="width: 70px"
+              style=""
               [class.outline-appearance]="VOForm.get('VORows')?.value[i].isEditable"
               [class.legacy-appearance]="!VOForm.get('VORows')?.value[i].isEditable"  
             >

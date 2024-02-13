@@ -50,3 +50,15 @@
       color: #797988;
     }
   }
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #fff !important;
+    border-bottom: 0;
+  }
+  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+    position: relative !important;
+    top: 28px!important;
+    padding: initial !important;
+}
+.disabled-row {
+  pointer-events: none; 
+}

@@ -18,10 +18,14 @@ table {
 input.mat-input-element {
   color: rgb(0, 0, 0);
 }
-::ng-deep {
-  .outline-appearance {
-    border: none;
-  }
+.custom-disabled-row {
+  background-color: transparent; 
+}
 
-  
+.custom-disabled-row:hover {
+  background-color: initial;
+}
+
+.disabled-row input {
+  outline: none;
 }
