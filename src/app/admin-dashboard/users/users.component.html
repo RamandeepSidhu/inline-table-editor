@@ -122,8 +122,10 @@
             <td>
               <div *ngIf="user.isEdit">
                 <input type="text" [(ngModel)]="user.name" class="form-control" />
-                <div *ngIf="updateSubmitted && registrationForm.get('name')?.invalid">
-                  <div class="text-danger" *ngIf="registrationForm.get('name')?.errors?.['required']"> Name is required </div>
+                <div *ngIf="updateSubmitted">
+                  <div class="text-danger" *ngIf="user.name===''">
+                    Name is required
+                  </div>
                 </div>
               </div>
               <div *ngIf="!user.isEdit"> {{ user.name }} </div>
