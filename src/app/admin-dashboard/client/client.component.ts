@@ -72,9 +72,9 @@ export class ClientComponent implements AfterViewInit {
         this.users.map((val:any) =>
           this.fb.group({
             email: new FormControl(val.email),
-            plateform: new FormControl({ value: val.plateform, disabled: true }),
-            lead_score: new FormControl({ value: val.lead_score, disabled: true }),
-            country: new FormControl({ value: val.country, disabled: true }),
+            plateform: new FormControl(val.plateform),
+            lead_score: new FormControl(val.lead_score),
+            country: new FormControl(val.country),
             linkedin: new FormControl(val.linkedin),
             name: new FormControl(val.name),
             phone: new FormControl(val.phone),
@@ -284,5 +284,20 @@ export class ClientComponent implements AfterViewInit {
 
   errorMeessage(VOFormElement: any, i: any,item:string,error:string){
     return this.submitted && VOFormElement.get('VORows').at(i).get(item)?.errors && VOFormElement.get('VORows').at(i).get(item)?.errors[error];
+  }
+
+  deleteUser(VOFormElement: any, i: any) {
+    const formData = VOFormElement.get('VORows').at(i).value;
+    this.isLoading = true;
+    this.userServices.removeUser(formData.id).subscribe((response: any) => {
+      this.isLoading = false;
+      if (response.status === true) {
+        this.toaster.success(response.message, 'Success');
+        this.users.splice(i, 1);
+        this.formload();
+      } else {
+        this.toaster.error(response.message, 'Error');
+      }
+    });
   }
 }

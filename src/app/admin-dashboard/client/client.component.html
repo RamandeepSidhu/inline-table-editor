@@ -44,7 +44,7 @@
                             </button>
                             <button mat-icon-button class="material-icons app-toolbar-menu delete-button"
                                 [matTooltipPosition]="'right'" *ngIf="VOForm.get('VORows')?.value[i].isEditable"
-                                matTooltip="Delete" color="warn">
+                                matTooltip="Delete" color="warn" (click)="deleteUser(VOForm,i)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </td>
