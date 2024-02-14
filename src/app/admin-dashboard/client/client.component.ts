@@ -148,7 +148,6 @@ export class ClientComponent implements AfterViewInit {
       return;
     }
     const control = this.VOForm.get('VORows') as FormArray;
-    console.log(control)
     control.insert(0, this.initiateVOForm());
     this.dataSource = new MatTableDataSource(control.controls);
     this.dataSource.paginator = this.paginator;
@@ -201,7 +200,23 @@ export class ClientComponent implements AfterViewInit {
   CancelSVO(VOFormElement: any, i: any) {
     // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
+    const user = this.users[i];
     formData.get('isEditable').patchValue(true);
+    if(formData.value.isNewRow){
+      const control = this.VOForm.get('VORows') as FormArray;
+      control.removeAt(i);
+      this.dataSource = new MatTableDataSource(control.controls);
+      this.dataSource.paginator = this.paginator;
+      this.updateIndex();
+    }else{
+      formData.get('country').patchValue(user.country);
+      formData.get('plateform').patchValue(user.plateform);
+      formData.get('lead_score').patchValue(user.lead_score);
+      formData.get('name').patchValue(user.name);
+      formData.get('email').patchValue(user.email);
+      formData.get('phone').patchValue(user.phone);
+      formData.get('linkedin').patchValue(user.linkedin);
+    }
     this.formDisable(formData);
   }
 
