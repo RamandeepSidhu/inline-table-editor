@@ -310,6 +310,7 @@ export class ClientComponent implements AfterViewInit {
         this.toaster.success(response.message, 'Success');
         this.users.splice(i, 1);
         this.formload();
+        this.updateIndex();
       } else {
         this.toaster.error(response.message, 'Error');
       }

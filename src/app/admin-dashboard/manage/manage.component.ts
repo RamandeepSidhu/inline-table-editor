@@ -103,11 +103,11 @@ export class ManageComponent {
     const type: String = this.title;
     this.userServices.storeAndUpdateManageUser(payload, type, this.id).subscribe(
       (response: any) => {
+        this.isLoading = false;
         if (response.status === true) {
           this.submitted = false;
           this.id = '';
           this.toaster.success(response.message, 'Success');
-          this.isLoading = false;
           this.form.reset();
           $('#newRecord').modal('hide');
           this.getData(this.title);
@@ -127,8 +127,8 @@ export class ManageComponent {
         if (response.status === true) {
           this.toaster.success(response.message, 'Success');
           this.data.splice(index, 1);
-          this.isLoading = false;
           this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
+          this.isLoading = false;
         }
         else {
           this.isLoading = false;

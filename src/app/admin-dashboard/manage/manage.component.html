@@ -6,8 +6,8 @@
     matTooltip="Add new Record" [matTooltipPosition]="'left'">
     <mat-icon class="add-button create-icon">add</mat-icon> Add New Record </button>
 </div>
-<app-shimmer *ngIf="isLoading"></app-shimmer>
-<div class="py-4" *ngIf="!isLoading">
+<!-- <app-shimmer *ngIf="isLoading"></app-shimmer> -->
+<div class="py-4">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation" (click)="tabClick('country')">
       <button class="nav-link active" id="country-tab" data-toggle="tab" data-target="#country" type="button" role="tab"
@@ -69,3 +69,7 @@
     </form>
   </div>
 </div>
+<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</mat-card>
