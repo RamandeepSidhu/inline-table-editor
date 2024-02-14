@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/users.service';
+import { MatSort } from '@angular/material/sort';
 
 export interface PeriodicElement {
   name: string;
@@ -30,6 +31,8 @@ export interface PeriodicElement {
 })
 export class ClientComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
   paginatorList!: HTMLCollectionOf<Element>;
   idx!: number;
   dataSource:any = new MatTableDataSource<any>();
@@ -90,14 +93,13 @@ export class ClientComponent implements AfterViewInit {
     this.dataSource = new MatTableDataSource(
       (this.VOForm.get('VORows') as FormArray).controls
     );
+    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     const filterPredicate = this.dataSource.filterPredicate;
     this.dataSource.filterPredicate = (data: AbstractControl, filter:any) => {
       return filterPredicate.call(this.dataSource, data.value, filter);
     };
   }
-
-
 
   getUsers(params?: any) {
     this.isLoading = true;
@@ -153,7 +155,8 @@ export class ClientComponent implements AfterViewInit {
   }
 
   // this function will enabled the select field for editd
-  EditSVO(VOFormElement: any, i: any) {
+  EditSVO(VOFormElement: any, element: any) {
+    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formdata =  VOFormElement.get('VORows').at(i);
     // VOFormElement.get('VORows').at(i).get('name').disabled(false)
     formdata.get('isEditable').patchValue(false);
@@ -163,7 +166,8 @@ export class ClientComponent implements AfterViewInit {
     // this.isEditableNew = true;
   }
 
-  updateClient(VOFormElement: any, i: any) {
+  updateClient(VOFormElement: any, element: any) {
+    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if(!formData.valid){
@@ -193,7 +197,8 @@ export class ClientComponent implements AfterViewInit {
   }
 
   // On click of cancel button in the table (after click on edit) this method will call and reset the previous data
-  CancelSVO(VOFormElement: any, i: any) {
+  CancelSVO(VOFormElement: any, element: any) {
+    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     formData.get('isEditable').patchValue(true);
     this.formDisable(formData);
@@ -263,7 +268,8 @@ export class ClientComponent implements AfterViewInit {
   }
 
 
-  addNewRecord(VOFormElement: any, i: any) {
+  addNewRecord(VOFormElement: any, element: any) {
+    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if(!formData.valid){
@@ -293,7 +299,8 @@ export class ClientComponent implements AfterViewInit {
     return this.submitted && VOFormElement.get('VORows').at(i).get(item)?.errors && VOFormElement.get('VORows').at(i).get(item)?.errors[error];
   }
 
-  deleteUser(VOFormElement: any, i: any) {
+  deleteUser(VOFormElement: any, element: any) {
+    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i).value;
     this.isLoading = true;
     this.userServices.removeUser(formData.id).subscribe((response: any) => {

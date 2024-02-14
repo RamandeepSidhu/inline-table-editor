@@ -19,36 +19,36 @@
         </mat-form-field> -->
         <form [formGroup]="VOForm" autocomplete="off">
             <ng-container formArrayName="VORows">
-                <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+                <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z2" matSort>
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef>Action</th>
                         <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                             <button mat-icon-button class="material-icons app-toolbar-menu save-button"
                                 matTooltip="Add new record" [matTooltipPosition]="'left'"
-                                (click)="addNewRecord(VOForm,i)"
+                                (click)="addNewRecord(VOForm,element)"
                                 *ngIf="!VOForm.get('VORows')?.value[i].isEditable && VOForm.get('VORows')?.value[i].isNewRow"
                                 color="accent">
                                 <mat-icon>add</mat-icon>
                             </button>
                             <button mat-icon-button class="material-icons app-toolbar-menu save-button"
-                                [matTooltipPosition]="'left'" matTooltip="Save Changes" (click)="updateClient(VOForm,i)"
+                                [matTooltipPosition]="'left'" matTooltip="Save Changes" (click)="updateClient(VOForm,element)"
                                 *ngIf="!VOForm.get('VORows')?.value[i].isEditable && !VOForm.get('VORows')?.value[i].isNewRow"
                                 color="primary">
                                 <mat-icon>check_circle</mat-icon>
                             </button>
                             <button mat-icon-button class="material-icons app-toolbar-menu cancel-button"
                                 [matTooltipPosition]="'left'" matTooltip="Cancel Changes" color="warn"
-                                (click)="CancelSVO(VOForm,i)" *ngIf="!VOForm.get('VORows')?.value[i].isEditable">
+                                (click)="CancelSVO(VOForm,element)" *ngIf="!VOForm.get('VORows')?.value[i].isEditable">
                                 <mat-icon>cancel</mat-icon>
                             </button>
                             <button mat-icon-button class="material-icons app-toolbar-menu save-button"
                                 [matTooltipPosition]="'left'" *ngIf="VOForm.get('VORows')?.value[i].isEditable"
-                                matTooltip="Edit" color="primary" (click)="EditSVO(VOForm,i)">
+                                matTooltip="Edit" color="primary" (click)="EditSVO(VOForm,element)">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button mat-icon-button class="material-icons app-toolbar-menu delete-button"
                                 [matTooltipPosition]="'right'" *ngIf="VOForm.get('VORows')?.value[i].isEditable"
-                                matTooltip="Delete" color="warn" (click)="deleteUser(VOForm,i)">
+                                matTooltip="Delete" color="warn" (click)="deleteUser(VOForm,element)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </td>
