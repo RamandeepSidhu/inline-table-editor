@@ -46,8 +46,8 @@ export class ClientComponent implements AfterViewInit {
   public submitted = false;
   displayedColumns: string[] = [
     'action',
-    'email',
     'name',
+    'email',
     'phone',
     'linkedin',
     'plateform',
