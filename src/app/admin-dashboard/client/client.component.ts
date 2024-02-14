@@ -61,6 +61,7 @@ export class ClientComponent implements AfterViewInit {
     this.VOForm = this._formBuilder.group({
       VORows: this._formBuilder.array([]),
     });
+    this.formload()
   }
 
   formload (){
@@ -69,9 +70,9 @@ export class ClientComponent implements AfterViewInit {
         this.users.map((val:any) =>
           this.fb.group({
             email: new FormControl(val.email),
-            plateform: new FormControl(val.plateform),
-            lead_score: new FormControl(val.lead_score),
-            country: new FormControl(val.country),
+            plateform: new FormControl({ value: val.plateform, disabled: true }),
+            lead_score: new FormControl({ value: val.lead_score, disabled: true }),
+            country: new FormControl({ value: val.country, disabled: true }),
             linkedin: new FormControl(val.linkedin),
             name: new FormControl(val.name),
             phone: new FormControl(val.phone),
