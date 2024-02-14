@@ -111,4 +111,7 @@
   width: 30px !important;
   height: 46px !important;
   padding: 3px !important;
+  &:focus{
+    outline: none !important;
+  }
 }
