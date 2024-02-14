@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: AdminDashboardComponent,
     children: [
-      { path: 'dashboard', component: UsersComponent },
+      { path: 'dashboard', component: ClientComponent },
       { path: 'manage', component: ManageComponent },
       { path: 'users', component: UsersComponent },
       { path: 'client', component: ClientComponent },
