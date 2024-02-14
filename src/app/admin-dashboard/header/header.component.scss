@@ -1,19 +1,14 @@
-.login {
-  cursor: pointer;
-  border: 2px;
-  background: transparent;
-  &:focus{
-    outline: 0px;
+.container-fluid {
+  .login {
+    cursor: pointer;
+    border: 2px;
+    background: transparent;
+    &:focus{
+      outline: 0px;
+    }
   }
+  span.logout {
+    margin: 3px;
+    font-size: 15px;
 }
-.modal-header{
-  .modal-title{
-    font-weight: 500;
-    margin: 0px;
-  }
-}
-.modal-body{
-  p{
-    font-weight: 500;
-  }
 }

@@ -62,7 +62,7 @@ export class ManageComponent {
 
   tableData(): string {
     return `<div class="card table-responsive">
-      <table class="table table-sm table-hover">
+      <table class="table">
         <thead>
           <tr>
             <th>Sl No.</th>
@@ -76,8 +76,8 @@ export class ManageComponent {
               <td>${index + 1}</td>
               <td>${item.title}</td>
               <td>
-               <button type="button" style="border:0; background:transparent"  onClick="viewData(${index})"><span class="material-icons">edit</span></button>
-               <button type="button"  style="border:0; background:transparent" onClick="manageDelete(${index})"><span class="material-icons">delete_forever</span></button>
+               <button type="button" style="border:0; background:transparent"  onClick="viewData(${index})"><span class="material-icons" style="color:gray;">edit</span></button>
+               <button type="button"  style="border:0; background:transparent" onClick="manageDelete(${index})"><span class="material-icons" style="color:#fd4237;">delete_forever</span></button>
               </td>
             </tr>`).join('')}
         </tbody>
