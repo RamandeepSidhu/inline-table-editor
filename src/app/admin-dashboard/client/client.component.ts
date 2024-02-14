@@ -165,16 +165,13 @@ export class ClientComponent implements AfterViewInit {
 
   updateClient(VOFormElement: any, i: any) {
     const formData = VOFormElement.get('VORows').at(i);
-    formData.get('isEditable').patchValue(true);
-    formData.controls['country'].disable();
-    formData.controls['plateform'].disable();
-    formData.controls['lead_score'].disable();
     this.submitted = true;
     if(!formData.valid){
       this.toaster.error("Please fill the required field", 'Error');
       return;
     }
-    
+    this.formDisable(formData);
+    formData.get('isEditable').patchValue(true);
     const formValue = formData.value;
     this.isLoading = true;
     const payload = Object.keys(formValue)
@@ -199,9 +196,7 @@ export class ClientComponent implements AfterViewInit {
   CancelSVO(VOFormElement: any, i: any) {
     const formData = VOFormElement.get('VORows').at(i);
     formData.get('isEditable').patchValue(true);
-    formData.controls['country'].disable();
-    formData.controls['plateform'].disable();
-    formData.controls['lead_score'].disable();
+    this.formDisable(formData);
   }
 
   onPaginateChange(paginator: MatPaginator, list: HTMLCollectionOf<Element>) {
@@ -311,5 +306,11 @@ export class ClientComponent implements AfterViewInit {
         this.toaster.error(response.message, 'Error');
       }
     });
+  }
+
+  formDisable(formData:any){
+    formData.controls['country'].disable();
+    formData.controls['plateform'].disable();
+    formData.controls['lead_score'].disable();
   }
 }
