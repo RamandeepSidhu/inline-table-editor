@@ -8,8 +8,8 @@
         </div>
         <br />
         <mat-form-field style="width: 30%" [ngClass]="{'edit-mode':'true'}">
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search Name" #input />
         </mat-form-field>
         <!-- <mat-form-field style="width: 20%; float: right" [ngClass]="{'edit-mode': pageNumber}">
             <mat-label>Go to Page</mat-label>

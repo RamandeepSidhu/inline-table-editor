@@ -9,7 +9,7 @@
             <input type="email" name="email" id="email" placeholder="example@gmail.com"
                 required formControlName="email"
                 class="form-control">
-            <div class="text-danger text-left"
+            <div class="text-danger text-left mt-1"
                 *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
                 <div *ngIf="loginForm.controls['email'].errors?.['required']">Email is required</div>
                 <div *ngIf="loginForm.controls['email'].errors?.['email']">Invalid email format</div>
@@ -17,7 +17,8 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label text-gray-700">Password</label>
-            <input name="password" id="password" placeholder="••••••••" type="{{ passwordType }}" minlength="8"
+            <div class="input-with-icon">
+              <input name="password" id="password" placeholder="••••••••" type="{{ passwordType }}" minlength="8"
                 formControlName="password"
                 class="form-control"
                 required="">
@@ -30,7 +31,8 @@
                     alt="Toggle Password Visibility"
                     tabindex="0" />
                 </span>
-            <div class="text-danger text-left"
+                </div>
+            <div class="text-danger text-left mt-1"
                 *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
                 <div *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</div>
                 <div *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be at least 8 characters
@@ -38,7 +40,7 @@
             </div>
         </div>
         <button type="submit" [disabled]="loginForm.invalid"
-            class="btn btn-danger btn-block">Sign in</button>
+            class="btn btn-danger submit-button">Sign in</button>
     </form>
   
     </div>

@@ -53,15 +53,20 @@
     vertical-align: text-bottom;
   }
 
-  .eye-icon {
-    position: absolute;
-    right: 27px;
-    top: 70%; 
-    transform: translateY(-50%);
-    cursor: pointer;
+  .input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .eye-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
   }
 
-  button.btn.submit-button {
+  button.submit-button {
     border-radius: 27px;
   }
 
