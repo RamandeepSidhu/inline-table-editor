@@ -172,7 +172,7 @@
             <mat-progress-spinner color="primary" mode="indeterminate">
             </mat-progress-spinner>
         </mat-card>
-        <mat-paginator [pageSizeOptions]="[5, dataSource.data.length>8? dataSource.data.length:''  ]"
+        <mat-paginator class="pagination" [pageSizeOptions]="[5, dataSource.data.length>8? dataSource.data.length:''  ]"
             showFirstLastButtons>
         </mat-paginator>
     </div>
