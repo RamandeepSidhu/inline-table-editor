@@ -109,6 +109,7 @@ export class ClientComponent implements AfterViewInit {
           this.users = response.data;
           this.isLoading = false;
           this.formload();
+          this.updateIndex();
         }
       });
     } catch (error) {
@@ -135,6 +136,7 @@ export class ClientComponent implements AfterViewInit {
 
     this.paginator.page.subscribe(() => {
       this.onPaginateChange(this.paginator, this.paginatorList);
+      this.updateIndex();
     });
   }
 
@@ -152,11 +154,12 @@ export class ClientComponent implements AfterViewInit {
     const control = this.VOForm.get('VORows') as FormArray;
     control.insert(0, this.initiateVOForm());
     this.dataSource = new MatTableDataSource(control.controls);
+    this.updateIndex();
   }
 
   // this function will enabled the select field for editd
-  EditSVO(VOFormElement: any, element: any) {
-    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
+  EditSVO(VOFormElement: any, i: any) {
+    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formdata =  VOFormElement.get('VORows').at(i);
     // VOFormElement.get('VORows').at(i).get('name').disabled(false)
     formdata.get('isEditable').patchValue(false);
@@ -166,8 +169,8 @@ export class ClientComponent implements AfterViewInit {
     // this.isEditableNew = true;
   }
 
-  updateClient(VOFormElement: any, element: any) {
-    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
+  updateClient(VOFormElement: any, i: any) {
+    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if(!formData.valid){
@@ -197,8 +200,8 @@ export class ClientComponent implements AfterViewInit {
   }
 
   // On click of cancel button in the table (after click on edit) this method will call and reset the previous data
-  CancelSVO(VOFormElement: any, element: any) {
-    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
+  CancelSVO(VOFormElement: any, i: any) {
+    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     formData.get('isEditable').patchValue(true);
     this.formDisable(formData);
@@ -268,8 +271,8 @@ export class ClientComponent implements AfterViewInit {
   }
 
 
-  addNewRecord(VOFormElement: any, element: any) {
-    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
+  addNewRecord(VOFormElement: any, i: any) {
+    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if(!formData.valid){
@@ -299,8 +302,8 @@ export class ClientComponent implements AfterViewInit {
     return this.submitted && VOFormElement.get('VORows').at(i).get(item)?.errors && VOFormElement.get('VORows').at(i).get(item)?.errors[error];
   }
 
-  deleteUser(VOFormElement: any, element: any) {
-    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
+  deleteUser(VOFormElement: any, i: any) {
+    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i).value;
     this.isLoading = true;
     this.userServices.removeUser(formData.id).subscribe((response: any) => {
@@ -321,8 +324,9 @@ export class ClientComponent implements AfterViewInit {
     formData.controls['lead_score'].disable();
   }
 
-  getIndex(element:any){
-    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
-    return i;
+  updateIndex(): void {
+    this.dataSource.data.forEach((item:any, index:number) => {
+      item.index = index;
+    });
   }
 }
