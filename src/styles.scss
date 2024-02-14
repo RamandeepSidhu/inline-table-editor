@@ -55,9 +55,8 @@
    
   }
   .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
-    position: relative !important;
-    top: 28px!important;
-    padding: initial !important;
+    padding-top: 7px !important;
+    padding-bottom: 0px !important;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
@@ -101,4 +100,15 @@
 .mdc-text-field--filled .mdc-line-ripple::after {
   border-bottom-color: #000; 
 }
+}
+.mat-mdc-form-field-infix {
+  min-height: 25px !important;
+}
+.mat-mdc-form-field-subscript-wrapper {
+  margin-bottom: -21px !important;
+}
+.mat-mdc-icon-button.mat-mdc-button-base {
+  width: 30px !important;
+  height: 46px !important;
+  padding: 3px !important;
 }

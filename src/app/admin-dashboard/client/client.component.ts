@@ -43,14 +43,14 @@ export class ClientComponent implements AfterViewInit {
   public plateforms: any = [];
   public submitted = false;
   displayedColumns: string[] = [
+    'action',
     'email',
     'name',
     'phone',
     'linkedin',
     'plateform',
     'lead_score',
-    'country',
-    'action',
+    'country'
   ];
   constructor(private fb: FormBuilder, private _formBuilder: FormBuilder, private userServices: UserService,
     private toaster: ToastrService,
