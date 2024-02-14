@@ -320,4 +320,9 @@ export class ClientComponent implements AfterViewInit {
     formData.controls['plateform'].disable();
     formData.controls['lead_score'].disable();
   }
+
+  getIndex(element:any){
+    const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
+    return i;
+  }
 }
