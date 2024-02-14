@@ -5,6 +5,7 @@ import {
   FormControl,
   FormArray,
   AbstractControl,
+  Validators,
 } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -40,6 +41,7 @@ export class ClientComponent implements AfterViewInit {
   public countries: any = [];
   public leadScores: any = [];
   public plateforms: any = [];
+  public submitted = false;
   displayedColumns: string[] = [
     'email',
     'name',
@@ -75,6 +77,7 @@ export class ClientComponent implements AfterViewInit {
             linkedin: new FormControl(val.linkedin),
             name: new FormControl(val.name),
             phone: new FormControl(val.phone),
+            id: new FormControl(val._id),
             action: new FormControl('existingRecord'),
             isEditable: new FormControl(true),
             isNewRow: new FormControl(false),
@@ -138,6 +141,11 @@ export class ClientComponent implements AfterViewInit {
   }
 
   AddNewRow() {
+    const data = this.VOForm.get('VORows')?.value.filter((e:any)=>e.isNewRow);
+    if(data.length !== 0){
+      this.toaster.error("Please fill the first row", 'Error');
+      return;
+    }
     const control = this.VOForm.get('VORows') as FormArray;
     control.insert(0, this.initiateVOForm());
     this.dataSource = new MatTableDataSource(control.controls);
@@ -150,10 +158,32 @@ export class ClientComponent implements AfterViewInit {
     // this.isEditableNew = true;
   }
 
-  // On click of correct button in table (after click on edit) this method will call
-  SaveVO(VOFormElement: any, i: any) {
-    // alert('SaveVO')
+  updateClient(VOFormElement: any, i: any) {
     VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
+    const formData = VOFormElement.get('VORows').at(i);
+    this.submitted = true;
+    if(!formData.valid){
+      this.toaster.error("Please fill the required field", 'Error');
+      return;
+    }
+    const formValue = formData.value;
+    this.isLoading = true;
+    const payload = Object.keys(formValue)
+      .filter((key) => formValue[key] !== '' && formValue[key] !== null)
+      .reduce((obj: any, key) => {
+        obj[key] = formValue[key];
+        return obj;
+      }, {});
+    this.userServices.userUpdate(formData.value.id,payload).subscribe((response: any) => {
+      this.isLoading = false;
+      this.submitted = false;
+      if (response.status === true) {
+        this.getUsers();
+      } else {
+        this.toaster.error(response.message, 'Error');
+      }
+    });
+
   }
 
   // On click of cancel button in the table (after click on edit) this method will call and reset the previous data
@@ -187,16 +217,17 @@ export class ClientComponent implements AfterViewInit {
 
   initiateVOForm(): FormGroup {
     return this.fb.group({
-      email: new FormControl(''),
+      email: new FormControl('',[Validators.required,Validators.email]),
       linkedin: new FormControl(''),
       country: new FormControl(''),
       plateform: new FormControl(''),
       lead_score: new FormControl(''),
-      name: new FormControl(''),
+      name: new FormControl('',[Validators.required]),
       phone: new FormControl(''),
       action: new FormControl('newRecord'),
       isEditable: new FormControl(false),
       isNewRow: new FormControl(true),
+      id: new FormControl(''),
     });
   }
 
@@ -225,11 +256,32 @@ export class ClientComponent implements AfterViewInit {
 
 
   addNewRecord(VOFormElement: any, i: any) {
-    console.log(i);
-    console.log(VOFormElement.get('VORows').at(i).value,'VOFormElement')
-    // alert('SaveVO')
-    // VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
+    const formData = VOFormElement.get('VORows').at(i);
+    this.submitted = true;
+    if(!formData.valid){
+      this.toaster.error("Please fill the required field", 'Error');
+      return;
+    }
+    const formValue = formData.value;
+    this.isLoading = true;
+    const payload = Object.keys(formValue)
+      .filter((key) => formValue[key] !== '' && formValue[key] !== null)
+      .reduce((obj: any, key) => {
+        obj[key] = formValue[key];
+        return obj;
+      }, {});
+    this.userServices.usersCreate(payload).subscribe((response: any) => {
+      this.isLoading = false;
+      this.submitted = false;
+      if (response.status === true) {
+        this.getUsers();
+      } else {
+        this.toaster.error(response.message, 'Error');
+      }
+    });
   }
 
-  
+  errorMeessage(VOFormElement: any, i: any,item:string,error:string){
+    return this.submitted && VOFormElement.get('VORows').at(i).get(item)?.errors && VOFormElement.get('VORows').at(i).get(item)?.errors[error];
+  }
 }
