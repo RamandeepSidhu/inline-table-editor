@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/users.service';
 import { MatSort } from '@angular/material/sort';
@@ -19,9 +18,9 @@ export interface PeriodicElement {
   email: string;
   phone: string;
   linkedin: string;
-  plateform:string;
-  lead_score:string;
-  country:string;
+  plateform: string;
+  lead_score: string;
+  country: string;
 }
 
 @Component({
@@ -35,7 +34,7 @@ export class ClientComponent implements AfterViewInit {
 
   paginatorList!: HTMLCollectionOf<Element>;
   idx!: number;
-  dataSource:any = new MatTableDataSource<any>();
+  dataSource: any = new MatTableDataSource<any>();
   isLoading = true;
   pageNumber: number = 1;
   VOForm!: FormGroup;
@@ -57,8 +56,7 @@ export class ClientComponent implements AfterViewInit {
   ];
   constructor(private fb: FormBuilder, private _formBuilder: FormBuilder, private userServices: UserService,
     private toaster: ToastrService,
-    private route: Router,
-    private formBuilder: FormBuilder) {}
+  ) { }
 
   ngOnInit(): void {
     this.getManageData();
@@ -67,14 +65,12 @@ export class ClientComponent implements AfterViewInit {
       VORows: this._formBuilder.array([]),
     });
     this.formload();
-    this.VOForm.get('email')?.valueChanges.subscribe((selectedRole: string) => {
-    });
   }
 
-  formload (){
+  formload() {
     this.VOForm = this.fb.group({
       VORows: this.fb.array(
-        this.users.map((val:any) =>
+        this.users.map((val: any) =>
           this.fb.group({
             email: new FormControl(val.email,[Validators.required,Validators.email]),
             plateform: new FormControl({value:val.plateform,disabled:true}),
@@ -91,14 +87,13 @@ export class ClientComponent implements AfterViewInit {
         )
       ),
     });
-    this.isLoading = false;
     this.dataSource = new MatTableDataSource(
       (this.VOForm.get('VORows') as FormArray).controls
     );
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     const filterPredicate = this.dataSource.filterPredicate;
-    this.dataSource.filterPredicate = (data: AbstractControl, filter:any) => {
+    this.dataSource.filterPredicate = (data: AbstractControl, filter: any) => {
       return filterPredicate.call(this.dataSource, data.value, filter);
     };
   }
@@ -128,7 +123,7 @@ export class ClientComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit() {
-    
+
     this.dataSource.paginator = this.paginator;
     this.paginatorList = document.getElementsByClassName(
       'mat-paginator-range-label'
@@ -138,7 +133,6 @@ export class ClientComponent implements AfterViewInit {
 
     this.paginator.page.subscribe(() => {
       this.onPaginateChange(this.paginator, this.paginatorList);
-      this.updateIndex();
     });
   }
 
@@ -148,8 +142,8 @@ export class ClientComponent implements AfterViewInit {
   }
 
   AddNewRow() {
-    const data = this.VOForm.get('VORows')?.value.filter((e:any)=>e.isNewRow);
-    if(data.length !== 0){
+    const data = this.VOForm.get('VORows')?.value.filter((e: any) => e.isNewRow);
+    if (data.length !== 0) {
       this.toaster.error("Please fill the first row", 'Error');
       return;
     }
@@ -157,13 +151,14 @@ export class ClientComponent implements AfterViewInit {
     console.log(control)
     control.insert(0, this.initiateVOForm());
     this.dataSource = new MatTableDataSource(control.controls);
+    this.dataSource.paginator = this.paginator;
     this.updateIndex();
   }
 
   // this function will enabled the select field for editd
   EditSVO(VOFormElement: any, i: any) {
     // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
-    const formdata =  VOFormElement.get('VORows').at(i);
+    const formdata = VOFormElement.get('VORows').at(i);
     // VOFormElement.get('VORows').at(i).get('name').disabled(false)
     formdata.get('isEditable').patchValue(false);
     formdata.controls['country'].enable();
@@ -176,7 +171,7 @@ export class ClientComponent implements AfterViewInit {
     // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
-    if(!formData.valid){
+    if (!formData.valid) {
       this.toaster.error("Please fill the required field", 'Error');
       return;
     }
@@ -190,7 +185,7 @@ export class ClientComponent implements AfterViewInit {
         obj[key] = formValue[key];
         return obj;
       }, {});
-    this.userServices.userUpdate(formData.value.id,payload).subscribe((response: any) => {
+    this.userServices.userUpdate(formData.value.id, payload).subscribe((response: any) => {
       this.isLoading = false;
       this.submitted = false;
       if (response.status === true) {
@@ -212,7 +207,7 @@ export class ClientComponent implements AfterViewInit {
 
   onPaginateChange(paginator: MatPaginator, list: HTMLCollectionOf<Element>) {
     setTimeout(
-      (idx:any) => {
+      (idx: any) => {
         let from = paginator.pageSize * paginator.pageIndex + 1;
 
         let to =
@@ -241,7 +236,7 @@ export class ClientComponent implements AfterViewInit {
       country: new FormControl(''),
       plateform: new FormControl(''),
       lead_score: new FormControl(''),
-      name: new FormControl('',[Validators.required]),
+      name: new FormControl('', [Validators.required]),
       phone: new FormControl(''),
       action: new FormControl('newRecord'),
       isEditable: new FormControl(false),
@@ -278,7 +273,7 @@ export class ClientComponent implements AfterViewInit {
     // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
-    if(!formData.valid){
+    if (!formData.valid) {
       this.toaster.error("Please fill the required field", 'Error');
       return;
     }
@@ -301,7 +296,7 @@ export class ClientComponent implements AfterViewInit {
     });
   }
 
-  errorMeessage(VOFormElement: any, i: any,item:string,error:string){
+  errorMeessage(VOFormElement: any, i: any, item: string, error: string) {
     return this.submitted && VOFormElement.get('VORows').at(i).get(item)?.errors && VOFormElement.get('VORows').at(i).get(item)?.errors[error];
   }
 
@@ -321,14 +316,14 @@ export class ClientComponent implements AfterViewInit {
     });
   }
 
-  formDisable(formData:any){
+  formDisable(formData: any) {
     formData.controls['country'].disable();
     formData.controls['plateform'].disable();
     formData.controls['lead_score'].disable();
   }
 
   updateIndex(): void {
-    this.dataSource.data.forEach((item:any, index:number) => {
+    this.dataSource.data.forEach((item: any, index: number) => {
       item.index = index;
     });
   }
