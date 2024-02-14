@@ -113,7 +113,7 @@
                         <th mat-header-cell *matHeaderCellDef>Country</th>
                         <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                             <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}">
-                                <mat-select [disabled]="VOForm.get('VORows')?.value[i].isEditable"
+                                <mat-select
                                     formControlName="country" [(ngModal)]="VOForm.get('VORows')?.value[i].country">
                                     <mat-option *ngFor="let item of countries;let i=index"
                                         [value]="item._id">{{item.title}}</mat-option>
@@ -126,7 +126,7 @@
                         <th mat-header-cell *matHeaderCellDef>Plateform</th>
                         <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                             <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}">
-                                <mat-select [disabled]="VOForm.get('VORows')?.value[i].isEditable"
+                                <mat-select
                                     formControlName="plateform">
                                     <mat-option *ngFor="let item of plateforms;let i=index"
                                         [value]="item._id">{{item.title}}</mat-option>
@@ -140,7 +140,7 @@
                         <th mat-header-cell *matHeaderCellDef>leadScore</th>
                         <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                             <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[i].isEditable}">
-                                <mat-select [disabled]="VOForm.get('VORows')?.value[i].isEditable"
+                                <mat-select
                                     formControlName="lead_score">
                                     <mat-option *ngFor="let item of leadScores;let i=index"
                                         [value]="item._id">{{item.title}}</mat-option>

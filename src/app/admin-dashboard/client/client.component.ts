@@ -72,9 +72,9 @@ export class ClientComponent implements AfterViewInit {
         this.users.map((val:any) =>
           this.fb.group({
             email: new FormControl(val.email),
-            plateform: new FormControl(val.plateform),
-            lead_score: new FormControl(val.lead_score),
-            country: new FormControl(val.country),
+            plateform: new FormControl({value:val.plateform,disabled:true}),
+            lead_score: new FormControl({value:val.lead_score,disabled:true}),
+            country: new FormControl({value:val.country,disabled:true}),
             linkedin: new FormControl(val.linkedin),
             name: new FormControl(val.name),
             phone: new FormControl(val.phone),
@@ -154,19 +154,24 @@ export class ClientComponent implements AfterViewInit {
 
   // this function will enabled the select field for editd
   EditSVO(VOFormElement: any, i: any) {
+    const formdata =  VOFormElement.get('VORows').at(i);
     // VOFormElement.get('VORows').at(i).get('name').disabled(false)
-    VOFormElement.get('VORows').at(i).get('isEditable').patchValue(false);
+    formdata.get('isEditable').patchValue(false);
+    formdata.controls['country'].enable();
+    formdata.controls['plateform'].enable();
+    formdata.controls['lead_score'].enable();
     // this.isEditableNew = true;
   }
 
   updateClient(VOFormElement: any, i: any) {
-    VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if(!formData.valid){
       this.toaster.error("Please fill the required field", 'Error');
       return;
     }
+    this.formDisable(formData);
+    formData.get('isEditable').patchValue(true);
     const formValue = formData.value;
     this.isLoading = true;
     const payload = Object.keys(formValue)
@@ -189,7 +194,9 @@ export class ClientComponent implements AfterViewInit {
 
   // On click of cancel button in the table (after click on edit) this method will call and reset the previous data
   CancelSVO(VOFormElement: any, i: any) {
-    VOFormElement.get('VORows').at(i).get('isEditable').patchValue(true);
+    const formData = VOFormElement.get('VORows').at(i);
+    formData.get('isEditable').patchValue(true);
+    this.formDisable(formData);
   }
 
   onPaginateChange(paginator: MatPaginator, list: HTMLCollectionOf<Element>) {
@@ -299,5 +306,11 @@ export class ClientComponent implements AfterViewInit {
         this.toaster.error(response.message, 'Error');
       }
     });
+  }
+
+  formDisable(formData:any){
+    formData.controls['country'].disable();
+    formData.controls['plateform'].disable();
+    formData.controls['lead_score'].disable();
   }
 }
