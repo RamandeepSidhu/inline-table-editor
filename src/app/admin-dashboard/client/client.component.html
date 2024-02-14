@@ -1,8 +1,12 @@
 <div class="container-fluid">
     <div class="mat-elevation-z2">
-        <button class="addNewRow py-2" matTooltip="Add new record" [matTooltipPosition]="'left'">
-            <mat-icon (click)="AddNewRow()" class="add-button">add_box</mat-icon>
+        <div class="header-wrap p-2">
+        <button class="btn btn-success btn-sm addNewRow"  (click)="AddNewRow()">
+        <mat-icon class="add-button add-icon">add</mat-icon> Add New Record </button>
+        <button type="button" class="btn btn-primary btn-sm manageBtn" routerLink="/manage">
+           Manage Records
         </button>
+    </div>
         <br />
         <mat-form-field style="width: 30%" [ngClass]="{'edit-mode':'true'}">
             <mat-label>Filter</mat-label>

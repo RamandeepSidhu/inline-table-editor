@@ -1,42 +1,5 @@
 <div class="container-fluid">
-  <button
-    class="d-flex align-items-center login mt-2"
-    data-toggle="modal"
-    data-target="#myModal"  matTooltip="Logout" [matTooltipPosition]="'left'"
-  >
+  <button (click)="logout()" class="login mt-2 float-right" matTooltip="Logout" [matTooltipPosition]="'right'">
     <span class="material-icons">logout</span>
-    <span class="icon_name bottom-icon">Logout</span>
   </button>
-</div>
-<div class="container">
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">Logout Confirmation</h3>
-          <button type="button" class="close" data-dismiss="modal">
-            &times;
-          </button>
-        </div>
-
-        <div class="modal-body">
-          <p>Are you sure you want to logout of your admin account?</p>
-        </div>
-        <div class="modal-footer">
-          <div class="d-flex justify-content-between">
-            <div class="p-2">
-              <button type="button" class="btn btn-light" data-dismiss="modal">
-                Cancel
-              </button>
-            </div>
-            <div class="p-2">
-              <button type="button" class="btn btn-danger" (click)="logout()">
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

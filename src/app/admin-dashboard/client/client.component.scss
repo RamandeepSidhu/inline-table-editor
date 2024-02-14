@@ -1,4 +1,21 @@
-.addNewRow{
-border: none;
-background-color: transparent;
+.container-fluid{
+    .header-wrap{
+        display: flex;
+        gap:10px;
+    }
+    button.addNewRow{
+        display: flex;
+        height: 30px;
+        margin-top: 5px;
+    .add-icon {
+        font-size: 19px !important;
+        margin-top: 0px;
+        margin-left: -9px;
+      }
+    }
+    button.manageBtn {
+        height: 31px;
+        margin-top: 5px;
+    }
+    
 }

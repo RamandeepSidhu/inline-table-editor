@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,9 +10,11 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   constructor(
     private route: Router,
+    public dialog: MatDialog
   ) { }
   logout() {
     localStorage.clear();
     this.route.navigate(['/login']);
   }
+
 }
