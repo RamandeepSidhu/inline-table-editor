@@ -66,7 +66,9 @@ export class ClientComponent implements AfterViewInit {
     this.VOForm = this._formBuilder.group({
       VORows: this._formBuilder.array([]),
     });
-    this.formload()
+    this.formload();
+    this.VOForm.get('email')?.valueChanges.subscribe((selectedRole: string) => {
+    });
   }
 
   formload (){
@@ -177,9 +179,9 @@ export class ClientComponent implements AfterViewInit {
       this.toaster.error("Please fill the required field", 'Error');
       return;
     }
-    this.formDisable(formData);
     formData.get('isEditable').patchValue(true);
     const formValue = formData.value;
+    this.formDisable(formData);
     this.isLoading = true;
     const payload = Object.keys(formValue)
       .filter((key) => formValue[key] !== '' && formValue[key] !== null)
