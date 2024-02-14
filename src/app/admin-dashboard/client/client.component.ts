@@ -76,12 +76,12 @@ export class ClientComponent implements AfterViewInit {
       VORows: this.fb.array(
         this.users.map((val:any) =>
           this.fb.group({
-            email: new FormControl(val.email),
+            email: new FormControl(val.email,[Validators.required,Validators.email]),
             plateform: new FormControl({value:val.plateform,disabled:true}),
             lead_score: new FormControl({value:val.lead_score,disabled:true}),
             country: new FormControl({value:val.country,disabled:true}),
-            linkedin: new FormControl(val.linkedin),
-            name: new FormControl(val.name),
+            linkedin: new FormControl(val.linkedin,[Validators.pattern("^https:\/\/www\.linkedin\.com\/.*$")]),
+            name: new FormControl(val.name,[Validators.required]),
             phone: new FormControl(val.phone),
             id: new FormControl(val._id),
             action: new FormControl('existingRecord'),
@@ -154,6 +154,7 @@ export class ClientComponent implements AfterViewInit {
       return;
     }
     const control = this.VOForm.get('VORows') as FormArray;
+    console.log(control)
     control.insert(0, this.initiateVOForm());
     this.dataSource = new MatTableDataSource(control.controls);
     this.updateIndex();
@@ -236,7 +237,7 @@ export class ClientComponent implements AfterViewInit {
   initiateVOForm(): FormGroup {
     return this.fb.group({
       email: new FormControl('',[Validators.required,Validators.email]),
-      linkedin: new FormControl(''),
+      linkedin: new FormControl('',[Validators.pattern("^https:\/\/www\.linkedin\.com\/.*$")]),
       country: new FormControl(''),
       plateform: new FormControl(''),
       lead_score: new FormControl(''),

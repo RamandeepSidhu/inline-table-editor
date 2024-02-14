@@ -17,6 +17,7 @@
                 (ngModelChange)="goToPage()" />
         </mat-form-field> -->
         <form [formGroup]="VOForm" autocomplete="off">
+            <div class="table-responsive">
             <ng-container formArrayName="VORows">
                 <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z2" matSort>
                     <ng-container matColumnDef="action">
@@ -100,7 +101,7 @@
                                 [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[element.index].isEditable, 'edit-off': VOForm.get('VORows')?.value[element.index].isEditable}"
                                 [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
                                 <input matInput type="text" formControlName="phone"
-                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" />
+                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" [maxlength]="10" />
                             </mat-form-field>
                         </td>
                     </ng-container>
@@ -113,8 +114,10 @@
                                 [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[element.index].isEditable, 'edit-off': VOForm.get('VORows')?.value[element.index].isEditable}"
                                 [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
                                 <input matInput type="text" formControlName="linkedin"
-                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" />
-                            </mat-form-field>
+                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable"/>
+                                </mat-form-field>
+                                <mat-error *ngIf="submitted && errorMeessage(VOForm,i,'linkedin','pattern')">Invalid Pattern
+                                    format</mat-error>
                         </td>
                     </ng-container>
                     <!-- Country Column -->
@@ -167,6 +170,7 @@
                     </tr>
                 </table>
             </ng-container>
+            </div>
         </form>
         <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
             <mat-progress-spinner color="primary" mode="indeterminate">
