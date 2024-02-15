@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module';
 import { LoginComponent } from './login/login.component';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { HttpInterceptorService } from './core/interceptors/basic.interceptor';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { HttpInterceptorService } from './core/interceptors/basic.interceptor';
     provide: HTTP_INTERCEPTORS,
     useClass: HttpInterceptorService,
     multi: true,
-  }],
+  },ToastrService],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

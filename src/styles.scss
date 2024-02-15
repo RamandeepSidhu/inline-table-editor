@@ -156,3 +156,16 @@
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
   top: 16px !important;
 }
+
+
+.card.manage-table {
+  .table thead th {
+    background-color: #F9FAFB !important;
+  }
+  button.viewData,
+  .manageDelete ,&:focus{
+    border:0;
+    background:transparent;
+    outline: none;
+  }
+}

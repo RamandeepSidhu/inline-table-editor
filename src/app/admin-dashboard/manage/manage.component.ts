@@ -57,11 +57,11 @@ export class ManageComponent {
 
   ngAfterViewInit() {
     (window as any).viewData = this.viewData.bind(this);
-    (window as any).manageDelete = this.manageDelete.bind(this);
+    (window as any).confirmDelete = this.confirmDelete.bind(this);
   }
 
   tableData(): string {
-    return `<div class="card table-responsive">
+    return `<div class="card table-responsive manage-table">
       <table class="table">
         <thead>
           <tr>
@@ -76,8 +76,8 @@ export class ManageComponent {
               <td>${index + 1}</td>
               <td>${item.title}</td>
               <td>
-               <button type="button" style="border:0; background:transparent"  onClick="viewData(${index})"><span class="material-icons" style="color:gray;">edit</span></button>
-               <button type="button"  style="border:0; background:transparent" onClick="manageDelete(${index})"><span class="material-icons" style="color:#fd4237;">delete_forever</span></button>
+               <button type="button" class="viewData" onClick="viewData(${index})"><span class="material-icons" style="color:#5D5FEF;">edit</span></button>
+               <button type="button" class="manageDelete" onClick="confirmDelete(${index})"><span class="material-icons" style="color:#fd4237;">delete_forever</span></button>
               </td>
             </tr>`).join('')}
         </tbody>
@@ -125,7 +125,9 @@ export class ManageComponent {
     this.userServices.deleteManageUser(this.title,id).subscribe(
       (response: any) => {
         if (response.status === true) {
+          $('#removeData').modal('hide');
           this.toaster.success(response.message, 'Success');
+          console.log(response.message)
           this.data.splice(index, 1);
           this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
           this.isLoading = false;
@@ -137,4 +139,15 @@ export class ManageComponent {
       },
     );
   }
-}
+  private currentIndexToDelete: number | null = null;
+
+  confirmDelete(index?: number) {
+    if (index !== undefined) {
+      this.currentIndexToDelete = index;
+      $('#removeData').modal('show');
+    } else if (this.currentIndexToDelete !== null) {
+      this.manageDelete(this.currentIndexToDelete);
+      this.currentIndexToDelete = null;
+    }
+  
+}}

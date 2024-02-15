@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { ManageComponent } from './manage/manage.component';
 import { ClientComponent } from './client/client.component';
-import { ShimmerComponent } from './shimmer/shimmer.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { DisableControlDirective } from './disabled-form';
 import { DemoMaterialModule } from './material-module';
@@ -17,7 +16,6 @@ import { DemoMaterialModule } from './material-module';
     UsersComponent,
     ManageComponent,
     ClientComponent,
-    ShimmerComponent,
     DisableControlDirective,
     
   ],
