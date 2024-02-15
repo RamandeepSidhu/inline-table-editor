@@ -1,8 +1,8 @@
 .container-fluid {
   .login {
-    cursor: pointer;
-    border: 2px;
-    background: transparent;
+    background-color: #5D5FEF;
+    color: #fff;
+    height: 34px;
     &:focus{
       outline: 0px;
     }
@@ -10,5 +10,7 @@
   span.logout {
     margin: 3px;
     font-size: 15px;
+    position: relative;
+    top: -6px;
 }
 }

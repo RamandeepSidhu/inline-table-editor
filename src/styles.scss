@@ -63,6 +63,7 @@
 
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: white;
+    margin: 1px;
     &:hover {
       border-bottom-color: #fff;
     }
@@ -132,6 +133,7 @@
 }
 .action-btn {
     display: flex;
+  border-left: #797988;
   .mat-mdc-icon-button.mat-mdc-button-base {
     width: 30px !important;
     height: 46px !important;
@@ -150,4 +152,7 @@
 }
 .mat-mdc-table .mdc-data-table__row {
   height: 43px !important;
+}
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 16px !important;
 }

@@ -4,7 +4,6 @@
 button.createButton {
   display: flex;
   height: 30px;
-  margin-top: 12px;
   .create-icon {
     font-size: 19px !important;
     margin-top: 0px;
@@ -13,4 +12,15 @@ button.createButton {
   .back {
     margin: -4px;
   }
+}
+.newRecord{
+  background-color: #5D5FEF;
+  color: #fff;
+}
+.card.table-responsive {
+  height: 39px;
+  background-color: #fcf5f5;
+}
+.nav-tabs {
+  border-bottom: 0px solid #dee2e6 !important;
 }
