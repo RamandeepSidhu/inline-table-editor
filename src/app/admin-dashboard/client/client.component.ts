@@ -50,7 +50,6 @@ export class ClientComponent implements AfterViewInit {
   public pageSize:number =10;
   selection = new SelectionModel<PeriodicElement>(true, []);
   displayedColumns: string[] = [
-    'select',
     'action',
     'name',
     'email',

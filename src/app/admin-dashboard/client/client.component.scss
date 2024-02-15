@@ -36,7 +36,7 @@
     padding: 6px;
   }
   th.mat-mdc-header-cell {
-    padding: 0 32px !important;
+    padding: 0 19px !important;
     color: #667085;
   }
   .mat-mdc-table .mdc-data-table__header-row {
@@ -47,11 +47,8 @@
     .search-bar {
       border-radius: 7px;
       border: 1px solid #cbbcbc;
-      position: relative;
-      bottom: 2px;
       height: 39px;
       display: flex;
-   
       .search-icon {
         position: relative;
         top: 6px;
@@ -59,7 +56,7 @@
         z-index: 1;
       }
       @media (max-width: 767px) {
-        width: 100% !important;
+        width: 100%;
       }
     }
   }

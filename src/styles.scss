@@ -53,17 +53,13 @@
 
 .edit-mode,
 .edit-off {
-  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
-      .mdc-text-field--textarea
-    )
     .mat-mdc-form-field-infix {
-    padding-top: 7px !important;
+    padding-top: 0px !important;
     padding-bottom: 0px !important;
   }
 
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: white;
-    margin: 1px;
     &:hover {
       border-bottom-color: #fff;
     }
@@ -172,10 +168,32 @@
 
 a.linkedin-link.mdc-button {
   color: #007bff !important;
+  z-index: 000;
+  position: relative;
 }
 .search-bar {
+  .mat-mdc-form-field-infix {
+    padding-top: 7px !important;
+  }
   .mdc-text-field--no-label:not(.mdc-text-field--textarea) {
     padding-left: 14px !important;
     width: 99% !important;
   }
+}
+.all-data-removed{
+ .mdc-checkbox__native-control{
+    margin: -14px !important;
+  }
+}
+.mdc-text-field {
+  padding: 0 1px !important;
+}
+  .mat-mdc-paginator .mat-mdc-select-value {
+    text-align: center !important;
+  }
+
+.pagination{
+  .mat-mdc-select-arrow-wrapper {
+    padding: 8px !important;
+}
 }

@@ -29,25 +29,22 @@
             <div class="table-responsive">
                 <ng-container formArrayName="VORows">
                     <table #table mat-table [dataSource]="dataSource" matSort>
-                        <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef>
-                              <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                                            [checked]="selection.hasValue() && isAllSelected()"
-                                            [indeterminate]="selection.hasValue() && !isAllSelected()" >
-                              </mat-checkbox>
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                              <mat-checkbox (click)="$event.stopPropagation()"
-                                            (change)="$event ? selection.toggle(row) : null"
-                                            [checked]="selection.isSelected(row)"
-                                            >
-                              </mat-checkbox>
-                            </td>
-                        </ng-container>
                         <ng-container matColumnDef="action" sticky>
-                            <th mat-header-cell *matHeaderCellDef>Action</th>
-                            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+                         <div class="d-flex">   <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                          [checked]="selection.hasValue() && isAllSelected()"
+                                          [indeterminate]="selection.hasValue() && !isAllSelected()" >
+                            </mat-checkbox>
+                          Action</th></div>
+                            <td mat-cell *matCellDef="let element; let i = index; let row" [formGroup]="element">
                                 <div class="action-btn">
+                                    <div class="all-data-removed">
+                                            <mat-checkbox (click)="$event.stopPropagation()"
+                                                          (change)="$event ? selection.toggle(row) : null"
+                                                          [checked]="selection.isSelected(row)"
+                                                          >
+                                            </mat-checkbox>
+                                    </div>
                                     <button mat-icon-button class="material-icons app-toolbar-menu save-button"
                                         matTooltip="Add new record" [matTooltipPosition]="'left'"
                                         (click)="addNewRecord(VOForm,element.index)"
