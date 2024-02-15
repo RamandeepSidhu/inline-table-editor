@@ -14,6 +14,8 @@ import { UserService } from 'src/app/core/services/users.service';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationModelComponent } from '../confirmation-model/confirmation-model.component';
 
 export interface PeriodicElement {
   name: string;
@@ -64,7 +66,8 @@ export class ClientComponent implements AfterViewInit {
     private _formBuilder: FormBuilder,
     private userServices: UserService,
     private toaster: ToastrService,
-    private route: Router
+    private route: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -420,4 +423,16 @@ export class ClientComponent implements AfterViewInit {
       this.isLoading = false;
     }
   }
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+      width: '350px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  
+    dialogRef.componentInstance.removeConfirmed.subscribe(() => {
+      this.multipleRecordDelete();
+    });
+  }
+  
 }

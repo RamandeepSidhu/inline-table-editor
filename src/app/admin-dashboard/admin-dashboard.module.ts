@@ -9,6 +9,7 @@ import { ClientComponent } from './client/client.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { DisableControlDirective } from './disabled-form';
 import { DemoMaterialModule } from './material-module';
+import { ConfirmationModelComponent } from './confirmation-model/confirmation-model.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { DemoMaterialModule } from './material-module';
     ManageComponent,
     ClientComponent,
     DisableControlDirective,
+    ConfirmationModelComponent,
     
   ],
   imports: [
