@@ -1,7 +1,5 @@
-.container-border {
-  width: 100%;
-  margin-right: auto !important;
-  margin-left: auto !important;
+.container-inner {
+  overflow: hidden;
   .header-wrap-header {
     margin-top: 20px;
     h4.heading {
