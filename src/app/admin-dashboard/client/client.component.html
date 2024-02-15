@@ -2,7 +2,6 @@
     <div class="header-wrap-header">
         <h4 class="heading">All Client </h4>
     </div>
-   
     <div class="container-fluid">
         <div class="d-flex">
             <div class="p-1 mb-1 flex-grow-1">
@@ -21,6 +20,11 @@
             <div class="p-1 mb-1"> 
                 <button class="btn btn-sm addNewRow p-2" (click)="AddNewRow()">
                     <mat-icon class="add-button add-icon">add</mat-icon> Add New Record </button>
+            </div>
+            <div class="p-1 mb-1"> 
+                <button type="button" (click)="logout()" class="btn btn-sm login mt-2">
+                    <span class="material-icons">logout</span><span class="logout">Logout</span>
+                    </button>
             </div>
         </div>
         <form [formGroup]="VOForm" autocomplete="off">

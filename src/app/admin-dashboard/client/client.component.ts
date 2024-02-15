@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/users.service';
 import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -52,11 +53,15 @@ export class ClientComponent implements AfterViewInit {
     'linkedin',
     'plateform',
     'lead_score',
-    'country'
+    'country',
   ];
-  constructor(private fb: FormBuilder, private _formBuilder: FormBuilder, private userServices: UserService,
+  constructor(
+    private fb: FormBuilder,
+    private _formBuilder: FormBuilder,
+    private userServices: UserService,
     private toaster: ToastrService,
-  ) { }
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
     this.getManageData();
@@ -72,12 +77,23 @@ export class ClientComponent implements AfterViewInit {
       VORows: this.fb.array(
         this.users.map((val: any) =>
           this.fb.group({
-            email: new FormControl(val.email,[Validators.required,Validators.email]),
-            plateform: new FormControl({value:val.plateform,disabled:true}),
-            lead_score: new FormControl({value:val.lead_score,disabled:true}),
-            country: new FormControl({value:val.country,disabled:true}),
-            linkedin: new FormControl(val.linkedin,[Validators.pattern("^https:\/\/www\.linkedin\.com\/.*$")]),
-            name: new FormControl(val.name,[Validators.required]),
+            email: new FormControl(val.email, [
+              Validators.required,
+              Validators.email,
+            ]),
+            plateform: new FormControl({
+              value: val.plateform,
+              disabled: true,
+            }),
+            lead_score: new FormControl({
+              value: val.lead_score,
+              disabled: true,
+            }),
+            country: new FormControl({ value: val.country, disabled: true }),
+            linkedin: new FormControl(val.linkedin, [
+              Validators.pattern('^https://www.linkedin.com/.*$'),
+            ]),
+            name: new FormControl(val.name, [Validators.required]),
             phone: new FormControl(val.phone),
             id: new FormControl(val._id),
             action: new FormControl('existingRecord'),
@@ -123,7 +139,6 @@ export class ClientComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit() {
-
     this.dataSource.paginator = this.paginator;
     this.paginatorList = document.getElementsByClassName(
       'mat-paginator-range-label'
@@ -142,9 +157,11 @@ export class ClientComponent implements AfterViewInit {
   }
 
   AddNewRow() {
-    const data = this.VOForm.get('VORows')?.value.filter((e: any) => e.isNewRow);
+    const data = this.VOForm.get('VORows')?.value.filter(
+      (e: any) => e.isNewRow
+    );
     if (data.length !== 0) {
-      this.toaster.error("Please fill the first row", 'Error');
+      this.toaster.error('Please fill the first row', 'Error');
       return;
     }
     const control = this.VOForm.get('VORows') as FormArray;
@@ -171,7 +188,7 @@ export class ClientComponent implements AfterViewInit {
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if (!formData.valid) {
-      this.toaster.error("Please fill the required field", 'Error');
+      this.toaster.error('Please fill the required field', 'Error');
       return;
     }
     formData.get('isEditable').patchValue(true);
@@ -184,16 +201,17 @@ export class ClientComponent implements AfterViewInit {
         obj[key] = formValue[key];
         return obj;
       }, {});
-    this.userServices.userUpdate(formData.value.id, payload).subscribe((response: any) => {
-      this.isLoading = false;
-      this.submitted = false;
-      if (response.status === true) {
-        this.getUsers();
-      } else {
-        this.toaster.error(response.message, 'Error');
-      }
-    });
-
+    this.userServices
+      .userUpdate(formData.value.id, payload)
+      .subscribe((response: any) => {
+        this.isLoading = false;
+        this.submitted = false;
+        if (response.status === true) {
+          this.getUsers();
+        } else {
+          this.toaster.error(response.message, 'Error');
+        }
+      });
   }
 
   // On click of cancel button in the table (after click on edit) this method will call and reset the previous data
@@ -202,13 +220,13 @@ export class ClientComponent implements AfterViewInit {
     const formData = VOFormElement.get('VORows').at(i);
     const user = this.users[i];
     formData.get('isEditable').patchValue(true);
-    if(formData.value.isNewRow){
+    if (formData.value.isNewRow) {
       const control = this.VOForm.get('VORows') as FormArray;
       control.removeAt(i);
       this.dataSource = new MatTableDataSource(control.controls);
       this.dataSource.paginator = this.paginator;
       this.updateIndex();
-    }else{
+    } else {
       formData.get('country').patchValue(user.country);
       formData.get('plateform').patchValue(user.plateform);
       formData.get('lead_score').patchValue(user.lead_score);
@@ -246,8 +264,10 @@ export class ClientComponent implements AfterViewInit {
 
   initiateVOForm(): FormGroup {
     return this.fb.group({
-      email: new FormControl('',[Validators.required,Validators.email]),
-      linkedin: new FormControl('',[Validators.pattern("^https:\/\/www\.linkedin\.com\/.*$")]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      linkedin: new FormControl('', [
+        Validators.pattern('^https://www.linkedin.com/.*$'),
+      ]),
       country: new FormControl(''),
       plateform: new FormControl(''),
       lead_score: new FormControl(''),
@@ -260,7 +280,6 @@ export class ClientComponent implements AfterViewInit {
     });
   }
 
-
   getManageData() {
     try {
       this.userServices.getManageUser('country').subscribe((response: any) => {
@@ -268,11 +287,13 @@ export class ClientComponent implements AfterViewInit {
           this.countries = response.data;
         }
       });
-      this.userServices.getManageUser('leadscore').subscribe((response: any) => {
-        if (response.status === true) {
-          this.leadScores = response.data;
-        }
-      });
+      this.userServices
+        .getManageUser('leadscore')
+        .subscribe((response: any) => {
+          if (response.status === true) {
+            this.leadScores = response.data;
+          }
+        });
       this.userServices.getManageUser('platform').subscribe((response: any) => {
         if (response.status === true) {
           this.plateforms = response.data;
@@ -283,13 +304,12 @@ export class ClientComponent implements AfterViewInit {
     }
   }
 
-
   addNewRecord(VOFormElement: any, i: any) {
     // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if (!formData.valid) {
-      this.toaster.error("Please fill the required field", 'Error');
+      this.toaster.error('Please fill the required field', 'Error');
       return;
     }
     const formValue = formData.value;
@@ -312,7 +332,11 @@ export class ClientComponent implements AfterViewInit {
   }
 
   errorMeessage(VOFormElement: any, i: any, item: string, error: string) {
-    return this.submitted && VOFormElement.get('VORows').at(i).get(item)?.errors && VOFormElement.get('VORows').at(i).get(item)?.errors[error];
+    return (
+      this.submitted &&
+      VOFormElement.get('VORows').at(i).get(item)?.errors &&
+      VOFormElement.get('VORows').at(i).get(item)?.errors[error]
+    );
   }
 
   deleteUser(VOFormElement: any, i: any) {
@@ -342,5 +366,9 @@ export class ClientComponent implements AfterViewInit {
     this.dataSource.data.forEach((item: any, index: number) => {
       item.index = index;
     });
+  }
+  logout() {
+    localStorage.clear();
+    this.route.navigate(['/login']);
   }
 }

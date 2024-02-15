@@ -3,6 +3,7 @@
   margin-right: auto !important;
   margin-left: auto !important;
   .header-wrap-header {
+    margin-top: 20px;
     h4.heading {
       font-weight: 700;
       margin-left: 20px;
@@ -63,4 +64,18 @@
   .table-responsive {
     border: 1px solid #C9C9CB;
   }
+  .login {
+    background-color: #5D5FEF;
+    color: #fff;
+    height: 34px;
+    &:focus{
+      outline: 0px;
+    }
+  }
+  span.logout {
+    margin: 3px;
+    font-size: 15px;
+    position: relative;
+    top: -6px;
+}
 }

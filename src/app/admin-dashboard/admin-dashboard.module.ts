@@ -4,12 +4,9 @@ import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
 import { UsersComponent } from './users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard.component';
-import { HeaderComponent } from './header/header.component';
 import { ManageComponent } from './manage/manage.component';
 import { ClientComponent } from './client/client.component';
 import { ShimmerComponent } from './shimmer/shimmer.component';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { DisableControlDirective } from './disabled-form';
 import { DemoMaterialModule } from './material-module';
@@ -18,7 +15,6 @@ import { DemoMaterialModule } from './material-module';
   declarations: [
     AdminDashboardComponent,
     UsersComponent,
-    HeaderComponent,
     ManageComponent,
     ClientComponent,
     ShimmerComponent,
