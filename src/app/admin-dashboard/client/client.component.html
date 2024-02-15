@@ -119,7 +119,7 @@
                             <th mat-header-cell *matHeaderCellDef>Linkedin</th>
                             <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                                 <ng-container *ngIf="VOForm.get('VORows')?.value[element.index].isEditable; else editableMode">
-                                    <a mat-button [href]="VOForm.get('VORows')?.value[element.index].linkedin" target="_blank">{{ VOForm.get('VORows')?.value[element.index].linkedin }}</a>
+                                    <a class="linkedin-link" mat-button [href]="VOForm.get('VORows')?.value[element.index].linkedin" target="_blank">{{ VOForm.get('VORows')?.value[element.index].linkedin }}</a>
                                 </ng-container>
                                 <ng-template #editableMode>
                                     <mat-form-field

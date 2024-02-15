@@ -72,9 +72,9 @@
     min-height: 25px !important;
   }
   .mat-mdc-form-field-bottom-align::before {
-     display: flex !important;
-    height: 0px!important;  
-}
+    display: flex !important;
+    height: 0px !important;
+  }
 }
 .edit-mode {
   .mat-mdc-form-field-focus-overlay {
@@ -132,7 +132,7 @@
   }
 }
 .action-btn {
-    display: flex;
+  display: flex;
   border-left: #797988;
   .mat-mdc-icon-button.mat-mdc-button-base {
     width: 30px !important;
@@ -157,15 +157,25 @@
   top: 16px !important;
 }
 
-
 .card.manage-table {
   .table thead th {
-    background-color: #F9FAFB !important;
+    background-color: #f9fafb !important;
   }
   button.viewData,
-  .manageDelete ,&:focus{
-    border:0;
-    background:transparent;
+  .manageDelete,
+  &:focus {
+    border: 0;
+    background: transparent;
     outline: none;
+  }
+}
+
+a.linkedin-link.mdc-button {
+  color: #007bff !important;
+}
+.search-bar {
+  .mdc-text-field--no-label:not(.mdc-text-field--textarea) {
+    padding-left: 14px !important;
+    width: 99% !important;
   }
 }
