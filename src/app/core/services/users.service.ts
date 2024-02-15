@@ -63,4 +63,7 @@ export class UserService {
         }
         return this.http.delete<any>(`${this.apiUrl}/manage/${id}`, { params: params });
     }
+    multipleUsersDelete(ids: any) {
+        return this.http.post<any>(`${this.apiUrl}/multipleUserDelete`, ids);
+    }
 }

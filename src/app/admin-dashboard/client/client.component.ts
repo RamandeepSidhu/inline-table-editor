@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/users.service';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export interface PeriodicElement {
   name: string;
@@ -47,7 +48,9 @@ export class ClientComponent implements AfterViewInit {
   public pageSizeOptions:any =[];
   public submitted = false;
   public pageSize:number =10;
+  selection = new SelectionModel<PeriodicElement>(true, []);
   displayedColumns: string[] = [
+    'select',
     'action',
     'name',
     'email',
@@ -385,5 +388,37 @@ export class ClientComponent implements AfterViewInit {
       option *= base;
     }
     this.pageSizeOptions.push(dataLength);
+  }
+
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.dataSource.data);
+  }
+
+  multipleRecordDelete(){
+    const ids = this.selection.selected.map((e:any)=>e.value.id);
+    this.isLoading = true;
+    try {
+      this.userServices.multipleUsersDelete({ids:ids}).subscribe((response: any) => {
+        this.isLoading = false;
+        if(response.status === true){
+          this.getUsers();
+          this.selection.clear();
+        }
+      });
+    } catch (error) {
+      this.isLoading = false;
+    }
   }
 }
