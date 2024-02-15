@@ -121,15 +121,19 @@
                         <ng-container matColumnDef="linkedin">
                             <th mat-header-cell *matHeaderCellDef>Linkedin</th>
                             <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-                                <mat-form-field
-                                    [class.outline-appearance]="VOForm.get('VORows')?.value[element.index].isEditable"
-                                    [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[element.index].isEditable, 'edit-off': VOForm.get('VORows')?.value[element.index].isEditable}"
-                                    [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
-                                    <input matInput type="text" formControlName="linkedin"
-                                        [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" />
-                                </mat-form-field>
-                                <mat-error *ngIf="submitted && errorMeessage(VOForm,i,'linkedin','pattern')">Invalid
-                                    Pattern format</mat-error>
+                                <ng-container *ngIf="VOForm.get('VORows')?.value[element.index].isEditable; else editableMode">
+                                    <a mat-button [href]="VOForm.get('VORows')?.value[element.index].linkedin" target="_blank">{{ VOForm.get('VORows')?.value[element.index].linkedin }}</a>
+                                </ng-container>
+                                <ng-template #editableMode>
+                                    <mat-form-field
+                                        [class.outline-appearance]="VOForm.get('VORows')?.value[element.index].isEditable"
+                                        [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[element.index].isEditable, 'edit-off': VOForm.get('VORows')?.value[element.index].isEditable}"
+                                        [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
+                                        <input matInput type="text" formControlName="linkedin"
+                                            [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" />
+                                    </mat-form-field>
+                                    <mat-error *ngIf="submitted && errorMeessage(VOForm,i,'linkedin','pattern')">Invalid Pattern format</mat-error>
+                                </ng-template>
                             </td>
                         </ng-container>
                         <!-- Country Column -->
@@ -188,7 +192,7 @@
             <mat-progress-spinner color="primary" mode="indeterminate">
             </mat-progress-spinner>
         </mat-card>
-        <mat-paginator class="pagination" [pageSizeOptions]="[5, dataSource.data.length>8? dataSource.data.length:''  ]"
+        <mat-paginator class="pagination" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"
             showFirstLastButtons>
         </mat-paginator>
     </div>

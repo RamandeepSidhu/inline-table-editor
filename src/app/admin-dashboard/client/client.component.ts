@@ -44,7 +44,9 @@ export class ClientComponent implements AfterViewInit {
   public countries: any = [];
   public leadScores: any = [];
   public plateforms: any = [];
+  public pageSizeOptions:any =[];
   public submitted = false;
+  public pageSize:number =10;
   displayedColumns: string[] = [
     'action',
     'name',
@@ -91,7 +93,7 @@ export class ClientComponent implements AfterViewInit {
             }),
             country: new FormControl({ value: val.country, disabled: true }),
             linkedin: new FormControl(val.linkedin, [
-              Validators.pattern('^https://www.linkedin.com/.*$'),
+              Validators.pattern('https?://(www\.)?linkedin\.com/in/.+'),
             ]),
             name: new FormControl(val.name, [Validators.required]),
             phone: new FormControl(val.phone),
@@ -154,6 +156,7 @@ export class ClientComponent implements AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.updateIndex();
   }
 
   AddNewRow() {
@@ -366,9 +369,21 @@ export class ClientComponent implements AfterViewInit {
     this.dataSource.data.forEach((item: any, index: number) => {
       item.index = index;
     });
+    this.calculatePageSizeOptions();
   }
   logout() {
     localStorage.clear();
     this.route.navigate(['/login']);
+  }
+  calculatePageSizeOptions() {
+    this.pageSizeOptions =[];
+    const dataLength = this.dataSource.data.length;
+    const base = 2;
+    let option = this.pageSize;
+    while (option < dataLength) {
+      this.pageSizeOptions.push(option);
+      option *= base;
+    }
+    this.pageSizeOptions.push(dataLength);
   }
 }
