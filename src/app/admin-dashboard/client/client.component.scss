@@ -17,11 +17,11 @@
 
   button.addNewRow {
     display: flex;
-    height: 35px;
+    height: 45px;
     margin-top: 5px;
     background-color: #0ab27d;
     color: #fff;
-    padding: 6px;
+    padding: 11px;
     .add-icon {
       font-size: 19px !important;
       margin-top: 0px;
@@ -29,7 +29,7 @@
     }
   }
   button.manageBtn {
-    height: 35px;
+    height: 45px;
     margin-top: 5px;
     background-color: #5D5FEF;
     color: #fff;
@@ -47,16 +47,19 @@
     .search-bar {
       border-radius: 7px;
       border: 1px solid #cbbcbc;
-      width: 17%;
       position: relative;
       bottom: 2px;
       height: 39px;
       display: flex;
+   
       .search-icon {
         position: relative;
         top: 6px;
         left: 10px;
         z-index: 1;
+      }
+      @media (max-width: 767px) {
+        width: 100% !important;
       }
     }
   }
@@ -64,10 +67,12 @@
     border: 1px solid #C9C9CB;
   }
   .login {
-    border-color: #cb9707;
-    color: #e29522;
-    height: 35px;
+    height: 45px;
     margin-top: 5px;
+    border: 0px;
+    .material-icons{
+      margin-top: 5px;
+    }
     &:focus{
       outline: 0px;
     }
@@ -76,6 +81,9 @@
     margin: 3px;
     font-size: 15px;
     position: relative;
-    top: -6px;
+    top: -7px;
+    @media (max-width: 767px) {
+      display: none;
+    }
 }
 }
