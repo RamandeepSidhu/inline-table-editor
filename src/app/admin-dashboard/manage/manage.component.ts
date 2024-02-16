@@ -153,7 +153,6 @@ export class ManageComponent {
         if (response.status === true) {
           $('#removeData').modal('hide');
           this.toaster.success(response.message, 'Success');
-          console.log(response.message);
           this.data.splice(index, 1);
           this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
           this.isLoading = false;
