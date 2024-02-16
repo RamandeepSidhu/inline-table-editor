@@ -212,10 +212,11 @@
             </ng-container>
         </div>
     </form>
-    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
-        <mat-progress-spinner color="primary" mode="indeterminate">
-        </mat-progress-spinner>
-    </mat-card>
+    <div *ngIf="isLoading" class="overlay">
+        <div style="display: flex; justify-content: center; align-items: center">
+            <mat-progress-spinner  mode="indeterminate" diameter="50"></mat-progress-spinner>
+        </div>
+    </div>
     <mat-paginator class="pagination" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons>
     </mat-paginator>
 </div>
