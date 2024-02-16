@@ -204,18 +204,18 @@ a.linkedin-link.mdc-button {
   margin-top: 1px;
   position: relative;
   right: 15px;
-  .mat-mdc-select-value{
+  .mat-mdc-select-value {
     font-size: 14px;
   }
-.toggle-btn{
-  border:1px solid #cbbcbc;
-  padding: 4px;
-  height: 45px;
-  margin-top: 5px;
-}
- .mat-mdc-select-arrow {
-  display: block !important;
-}
+  .toggle-btn {
+    border: 1px solid #cbbcbc;
+    padding: 4px;
+    height: 45px;
+    margin-top: 5px;
+  }
+  .mat-mdc-select-arrow {
+    display: block !important;
+  }
 }
 .overlay {
   position: fixed;
@@ -223,18 +223,27 @@ a.linkedin-link.mdc-button {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; 
-  .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
-    stroke: #5D5FEF;
-}
+  z-index: 999;
+  .mat-mdc-progress-spinner
+    .mdc-circular-progress__indeterminate-circle-graphic {
+    stroke: #5d5fef;
+  }
 }
 .cdk-overlay-container {
   z-index: 1041;
 }
 mat-form-field.mat-mdc-form-field.mat-mdc-form-field-type-mat-input.mat-form-field-appearance-fill.mat-primary {
   height: 26px;
+}
+button.mat-calendar-body-cell.mat-calendar-body-active {
+  outline: none;
+}
+.mdc-icon-button{
+  &:focus{
+    outline: 0 !important;
+  }
 }
