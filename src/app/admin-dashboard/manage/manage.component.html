@@ -163,7 +163,7 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn newRecord" (click)="onSubmit()">
+              <button type="submit" class="btn newRecord" [disabled]="form.pristine" (click)="onSubmit()">
                 Save changes
               </button>
             </div>

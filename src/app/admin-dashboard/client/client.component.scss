@@ -36,7 +36,7 @@
     padding: 6px;
   }
   th.mat-mdc-header-cell {
-    padding: 0 19px !important;
+    padding: 0 18px !important;
     color: #667085;
   }
   .mat-mdc-table .mdc-data-table__header-row {
@@ -83,4 +83,11 @@
       display: none;
     }
 }
+button.removeRecords{
+  height: 30px;
+  margin-top: 10px;
+  background-color: #5D5FEF;
+  color: #fff;
+  padding: 4px;
+  }
 }

@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Are you sure?</h2>
+<mat-dialog-content>
+  <ng-container *ngIf="data.action === 'logout'; else removeContent">
+    Are you sure you want to log out?
+  </ng-container>
+  <ng-template #removeContent>
+    Do you really want to delete these records?
+  </ng-template>
+</mat-dialog-content>
+
+<div class="confirmation-btn">
+  <mat-dialog-actions>
+    <button type="button" class="btn btn-light" mat-dialog-close>Cancel</button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="onRemoveConfirmed()"
+      cdkFocusInitial
+      *ngIf="data.action === 'remove'"
+    >
+      Remove
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="logout()"
+      cdkFocusInitial
+      *ngIf="data.action === 'logout'"
+    >
+      Logout
+    </button>
+  </mat-dialog-actions>
+</div>

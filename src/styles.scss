@@ -71,6 +71,10 @@
     display: flex !important;
     height: 0px !important;
   }
+
+}
+.mat-mdc-option.mdc-list-item {
+  font-size: 13px !important;
 }
 .edit-mode {
   .mat-mdc-form-field-focus-overlay {

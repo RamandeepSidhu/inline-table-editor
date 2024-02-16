@@ -8,7 +8,7 @@ declare var $: any;
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.scss']
+  styleUrls: ['./manage.component.scss'],
 })
 export class ManageComponent {
   public rows: any;
@@ -17,13 +17,14 @@ export class ManageComponent {
   public form!: FormGroup;
   public data: any = [];
   public isLoading = false;
-  public submitted = false
+  public submitted = false;
+  private currentIndexToDelete: number | null = null;
   constructor(
     private userServices: UserService,
     private toaster: ToastrService,
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.getData(this.title);
     this.form = this.formBuilder.group({
@@ -31,8 +32,7 @@ export class ManageComponent {
     });
   }
 
-  generateRows(): void {
-  }
+  generateRows(): void {}
 
   tabClick(tab: string) {
     this.title = tab;
@@ -42,14 +42,13 @@ export class ManageComponent {
   getData(params = this.title) {
     this.isLoading = true;
     try {
-      this.userServices.getManageUser(params).subscribe(
-        (response: any) => {
-          if (response.status === true) {
-            this.isLoading = false;
-            this.data = response.data;
-            this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
-          }
-        });
+      this.userServices.getManageUser(params).subscribe((response: any) => {
+        if (response.status === true) {
+          this.isLoading = false;
+          this.data = response.data;
+          this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
+        }
+      });
     } catch (error) {
       this.isLoading = false;
     }
@@ -61,17 +60,43 @@ export class ManageComponent {
   }
 
   tableData(): string {
+    if (this.data.length === 0) {
+      return `<div class="card table-responsive manage-table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>S.no</th>
+                      <th>Title</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                    <td colspan="5">
+                    <div class="col-12 text-center">
+                    <img src="assets/icons/EmptyState.svg">
+                    <h5>No records found</h5>
+                    </div>
+                </td>                
+                    </tr>
+                  </tbody>
+                </table>
+              </div>`;
+    }
     return `<div class="card table-responsive manage-table">
       <table class="table">
         <thead>
           <tr>
-            <th>Sl No.</th>
+            <th>S.no</th>
             <th>Title</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          ${this.data.map((item: any, index: any) => `
+        <tr>
+          ${this.data
+            .map(
+              (item: any, index: any) => `
             <tr>
               <td>${index + 1}</td>
               <td>${item.title}</td>
@@ -79,7 +104,9 @@ export class ManageComponent {
                <button type="button" class="viewData" onClick="viewData(${index})"><span class="material-icons" style="color:#5D5FEF;">edit</span></button>
                <button type="button" class="manageDelete" onClick="confirmDelete(${index})"><span class="material-icons" style="color:#fd4237;">delete_forever</span></button>
               </td>
-            </tr>`).join('')}
+            </tr>`
+            )
+            .join('')}
         </tbody>
       </table>
     </div>`;
@@ -97,12 +124,13 @@ export class ManageComponent {
     this.submitted = true;
     const payload = this.form.value;
     if (!this.form.valid) {
-      this.toaster.warning("The title field is required", 'Warning');
+      this.toaster.warning('The title field is required', 'Warning');
       return;
     }
     const type: String = this.title;
-    this.userServices.storeAndUpdateManageUser(payload, type, this.id).subscribe(
-      (response: any) => {
+    this.userServices
+      .storeAndUpdateManageUser(payload, type, this.id)
+      .subscribe((response: any) => {
         this.isLoading = false;
         if (response.status === true) {
           this.submitted = false;
@@ -111,35 +139,30 @@ export class ManageComponent {
           this.form.reset();
           $('#newRecord').modal('hide');
           this.getData(this.title);
-        }
-        else {
+        } else {
           this.toaster.error(response.message, 'Error');
         }
-      },
-    );
+      });
   }
 
-  manageDelete(index:number) {
+  manageDelete(index: number) {
     const id = this.data[index]._id;
     this.isLoading = true;
-    this.userServices.deleteManageUser(this.title,id).subscribe(
-      (response: any) => {
+    this.userServices
+      .deleteManageUser(this.title, id)
+      .subscribe((response: any) => {
         if (response.status === true) {
           $('#removeData').modal('hide');
           this.toaster.success(response.message, 'Success');
-          console.log(response.message)
           this.data.splice(index, 1);
           this.rows = this.sanitizer.bypassSecurityTrustHtml(this.tableData());
           this.isLoading = false;
-        }
-        else {
+        } else {
           this.isLoading = false;
           this.toaster.error(response.message, 'Error');
         }
-      },
-    );
+      });
   }
-  private currentIndexToDelete: number | null = null;
 
   confirmDelete(index?: number) {
     if (index !== undefined) {
@@ -149,5 +172,5 @@ export class ManageComponent {
       this.manageDelete(this.currentIndexToDelete);
       this.currentIndexToDelete = null;
     }
-  
-}}
+  }
+}
