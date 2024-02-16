@@ -35,7 +35,6 @@ export interface PeriodicElement {
 export class ClientComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
   paginatorList!: HTMLCollectionOf<Element>;
   idx!: number;
   dataSource: any = new MatTableDataSource<any>();
@@ -215,6 +214,7 @@ export class ClientComponent implements AfterViewInit {
         this.isLoading = false;
         this.submitted = false;
         if (response.status === true) {
+          this.toaster.success(response.message, 'Success');
           this.getUsers();
         } else {
           this.toaster.error(response.message, 'Error');
@@ -332,6 +332,7 @@ export class ClientComponent implements AfterViewInit {
       this.isLoading = false;
       this.submitted = false;
       if (response.status === true) {
+        this.toaster.success(response.message, 'Success');
         this.getUsers();
       } else {
         this.toaster.error(response.message, 'Error');
@@ -415,6 +416,7 @@ export class ClientComponent implements AfterViewInit {
       this.userServices.multipleUsersDelete({ids:ids}).subscribe((response: any) => {
         this.isLoading = false;
         if(response.status === true){
+          this.toaster.success(response.message, 'Success');
           this.getUsers();
           this.selection.clear();
         }
@@ -423,15 +425,22 @@ export class ClientComponent implements AfterViewInit {
       this.isLoading = false;
     }
   }
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, action: string): void {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
-      width: '350px',
+      width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
+      data: { action },
     });
   
-    dialogRef.componentInstance.removeConfirmed.subscribe(() => {
-      this.multipleRecordDelete();
+    dialogRef.componentInstance.alert.subscribe(() => {
+      if (action === 'logout') {
+        this.logout();
+      } else if (action === 'remove') {
+        console.log(action)
+        this.multipleRecordDelete();
+      }
     });
   }
   
