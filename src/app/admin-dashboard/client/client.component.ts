@@ -242,8 +242,20 @@ export class ClientComponent implements AfterViewInit {
       this.toaster.error('Please fill the required field', 'Error');
       return;
     }
-    formData.get('isEditable').patchValue(true);
     const formValue = formData.value;
+    if(formValue.date){
+      if(!formValue.time){
+        this.toaster.error('Please select the time', 'Error');
+        return;
+      }
+    }
+    if(formValue.time){
+      if(!formValue.date){
+        this.toaster.error('Please select the date', 'Error');
+        return;
+      }
+    }
+    formData.get('isEditable').patchValue(true);
     this.formDisable(formData);
     this.isLoading = true;
     const payload = Object.keys(formValue)
@@ -378,6 +390,18 @@ export class ClientComponent implements AfterViewInit {
       return;
     }
     const formValue = formData.value;
+    if(formValue.date){
+      if(!formValue.time){
+        this.toaster.error('Please select the time', 'Error');
+        return;
+      }
+    }
+    if(formValue.time){
+      if(!formValue.date){
+        this.toaster.error('Please select the date', 'Error');
+        return;
+      }
+    }
     console.log(formValue)
     this.isLoading = true;
     const payload = Object.keys(formValue)
