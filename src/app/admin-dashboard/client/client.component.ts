@@ -100,6 +100,10 @@ export class ClientComponent implements AfterViewInit {
               value: val.plateform,
               disabled: true,
             }),
+            conversion: new FormControl({
+              value: val.conversion,
+              disabled: true,
+            }),
             lead_score: new FormControl({
               value: val.lead_score,
               disabled: true,
@@ -289,6 +293,7 @@ export class ClientComponent implements AfterViewInit {
       country: new FormControl(''),
       plateform: new FormControl(''),
       lead_score: new FormControl(''),
+      conversions: new FormControl(''),
       name: new FormControl('', [Validators.required]),
       phone: new FormControl(''),
       action: new FormControl('newRecord'),
