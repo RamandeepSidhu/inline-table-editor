@@ -109,8 +109,9 @@
                                 [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[element.index].isEditable, 'edit-off': VOForm.get('VORows')?.value[element.index].isEditable}"
                                 [class.outline-appearance]="VOForm.get('VORows')?.value[element.index].isEditable"
                                 [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
-                                <input matInput type="text" formControlName="email"
-                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" />
+                                <input matInput type="text" formControlName="email" class="email" 
+                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" 
+                                    />
                             </mat-form-field>
                             <mat-error *ngIf="submitted && errorMeessage(VOForm,i,'email','required')">The email field
                                 is required</mat-error>
