@@ -69,6 +69,7 @@ export class ClientComponent implements AfterViewInit {
   selection = new SelectionModel<PeriodicElement>(true, []);
   toppings = new FormControl();
   selectedColumns: any[] = [];
+  searchValue: string = '';
   displayedColumnsName: string[]=[ 
   'action',
   'name',
@@ -454,6 +455,7 @@ export class ClientComponent implements AfterViewInit {
           this.toaster.success(response.message, 'Success');
           this.getUsers();
           this.selection.clear();
+          this.searchValue ='';
         }
       });
     } catch (error) {
