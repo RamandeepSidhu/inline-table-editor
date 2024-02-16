@@ -194,7 +194,7 @@
                     </ng-container>
                     <!-- plateform Column -->
                     <ng-container matColumnDef="plateform">
-                        <th mat-header-cell *matHeaderCellDef>Plateform</th>
+                        <th mat-header-cell *matHeaderCellDef>Platform</th>
                         <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                             <mat-form-field
                                 [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[element.index].isEditable, 'edit-off': VOForm.get('VORows')?.value[element.index].isEditable}">
