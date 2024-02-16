@@ -601,4 +601,10 @@ export class ClientComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
   }
+  onClick(event: MouseEvent, url: string | undefined): void {
+    if (!url) {
+      event.preventDefault();
+    }
+  }
+  
 }
