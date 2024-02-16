@@ -18,6 +18,7 @@ export class ManageComponent {
   public data: any = [];
   public isLoading = false;
   public submitted = false;
+  private currentIndexToDelete: number | null = null;
   constructor(
     private userServices: UserService,
     private toaster: ToastrService,
@@ -162,7 +163,6 @@ export class ManageComponent {
         }
       });
   }
-  private currentIndexToDelete: number | null = null;
 
   confirmDelete(index?: number) {
     if (index !== undefined) {
