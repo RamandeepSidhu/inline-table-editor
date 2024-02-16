@@ -107,7 +107,10 @@ export class ClientComponent implements AfterViewInit {
       VORows: this.fb.array(
         this.users.map((val: any) =>
           this.fb.group({
-            email: new FormControl(val.email, [
+            email: new FormControl({
+              value: val.email,
+              disabled: true,
+            }, [
               Validators.required,
               Validators.email,
             ]),
@@ -525,7 +528,6 @@ export class ClientComponent implements AfterViewInit {
 
   onChangeColumn(event:any,column:any){
     if (event.isUserInput) {
-      console.log(column.title,'column.title')
       this.displayedColumnsName.filter((item:any) =>{
         if(item === column.title){
           const index = this.displayedColumns.indexOf(column.title);
