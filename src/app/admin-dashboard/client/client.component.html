@@ -239,8 +239,8 @@
                         <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
                             <mat-form-field [ngClass]="{'edit-mode': !VOForm.get('VORows')?.value[element.index].isEditable, 'edit-off': VOForm.get('VORows')?.value[element.index].isEditable}" appearance="fill">
                                 <div class="d-flex">
-                                <input class="disbled-text time-picker"  matInput [matDatepicker]="picker" formControlName="date">
-                                <input  matInput class="time-picker" type="time" id="appt" name="appt" formControlName="time" />
+                                  <input class="disbled-text time-picker" matInput [matDatepicker]="picker" formControlName="date" readonly>
+                                  <input matInput class="time-picker" type="time" id="appt" name="appt" formControlName="time" />
                                 </div>
                                 <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="!VOForm.get('VORows')?.value[element.index].isEditable">
                                   <mat-icon class="date-picker" matDatepickerToggleIcon>today</mat-icon>
