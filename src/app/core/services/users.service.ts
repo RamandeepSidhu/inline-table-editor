@@ -66,10 +66,11 @@ export class UserService {
     multipleUsersDelete(ids: any) {
         return this.http.post<any>(`${this.apiUrl}/multipleUserDelete`, ids);
     }
-    updateUserTableColumn(data: any) {
-        return this.http.post<any>(`${this.apiUrl}/user-table-column`, data);
-    }
+
     getUserTableColumn(): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/user-table-column`);
+    }
+    updateUserTableColumn(data: any) {
+        return this.http.post<any>(`${this.apiUrl}/user-table-column-update`, data);
     }
 }

@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModelComponent } from '../confirmation-model/confirmation-model.component';
+import { MatSelect } from '@angular/material/select';
 
 export interface PeriodicElement {
   name: string;
@@ -35,6 +36,7 @@ export interface PeriodicElement {
 export class ClientComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSelect) userColumnSelect!: MatSelect;
   paginatorList!: HTMLCollectionOf<Element>;
   idx!: number;
   dataSource: any = new MatTableDataSource<any>();
@@ -52,7 +54,7 @@ export class ClientComponent implements AfterViewInit {
   public pageSize:number =10;
   selection = new SelectionModel<PeriodicElement>(true, []);
   toppings = new FormControl();
-
+  selectedColumns: any[] = []; 
   displayedColumns: string[] = [
     'action',
     'name',
@@ -430,14 +432,11 @@ export class ClientComponent implements AfterViewInit {
     }
   }
 
-
   disabledColumnField(){
-    let difference1 = this.usersTableColumn.filter((item:any) => !this.toppings.value.includes(item));
-    difference1.forEach((item:any) => {
-      item.isVisible = !item.isVisible;
-    });
-    if(difference1 && difference1.length !== 0){
-
+    if(this.selectedColumns && this.selectedColumns.length !== 0){
+      this.updateColumnField({ fields:this.selectedColumns })
+    }else{
+      this.userColumnSelect.close();
     }
   }
 
@@ -447,8 +446,6 @@ export class ClientComponent implements AfterViewInit {
         if(response.status === true){
           this.usersTableColumn = response.data;
           const ids = this.usersTableColumn.filter((e: any) => e.isVisible === true);
-          // this.toppings.setValue('65cee2ed94bff25c1529a0a0');
-          // this.toppings.patchValue('65cee2ed94bff25c1529a0a0')
           this.toppings.patchValue(ids);
         }
       });
@@ -457,7 +454,22 @@ export class ClientComponent implements AfterViewInit {
     }
   }
 
-  
+  updateColumnField(data:any){
+    try {
+      this.isLoading = true;
+      this.userServices.updateUserTableColumn(data).subscribe((response: any) => {
+        this.isLoading = false;
+        if(response.status === true){
+          this.userColumnSelect.close();
+          this.fetchColumnField();
+          this.selectedColumns =[];
+        }
+      });
+    } catch (error) {
+      this.isLoading = false;
+    }
+  }
+
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string, action: string): void {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: '450px',
@@ -474,5 +486,16 @@ export class ClientComponent implements AfterViewInit {
         this.multipleRecordDelete();
       }
     });
+  }
+
+  onChangeColumn(event:any,column:any){
+    if (event.isUserInput) {
+      const index = this.selectedColumns.indexOf(column);
+      if (index !== -1) {
+        this.selectedColumns.splice(index, 1);
+      }else{
+        this.selectedColumns.push(column); 
+      }
+    }
   }
 }
