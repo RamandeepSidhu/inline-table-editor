@@ -42,6 +42,7 @@ export class ClientComponent implements AfterViewInit {
   VOForm!: FormGroup;
   isEditableNew: boolean = true;
   public users: any = [];
+  public usersTableColumn: any = [];
   public countries: any = [];
   public leadScores: any = [];
   public plateforms: any = [];
@@ -49,6 +50,8 @@ export class ClientComponent implements AfterViewInit {
   public submitted = false;
   public pageSize:number =10;
   selection = new SelectionModel<PeriodicElement>(true, []);
+  toppings = new FormControl();
+
   displayedColumns: string[] = [
     'action',
     'name',
@@ -74,6 +77,7 @@ export class ClientComponent implements AfterViewInit {
       VORows: this._formBuilder.array([]),
     });
     this.formload();
+    this.fetchColumnField();
   }
 
   formload() {
@@ -414,6 +418,32 @@ export class ClientComponent implements AfterViewInit {
         if(response.status === true){
           this.getUsers();
           this.selection.clear();
+        }
+      });
+    } catch (error) {
+      this.isLoading = false;
+    }
+  }
+
+  disabledColumnField(){
+    let difference1 = this.usersTableColumn.filter((item:any) => !this.toppings.value.includes(item));
+    difference1.forEach((item:any) => {
+      item.isVisible = !item.isVisible;
+    });
+    if(difference1 && difference1.length !== 0){
+
+    }
+  }
+
+  fetchColumnField(){
+    try {
+      this.userServices.getUserTableColumn().subscribe((response: any) => {
+        if(response.status === true){
+          this.usersTableColumn = response.data;
+          const ids = this.usersTableColumn.filter((e: any) => e.isVisible === true);
+          // this.toppings.setValue('65cee2ed94bff25c1529a0a0');
+          // this.toppings.patchValue('65cee2ed94bff25c1529a0a0')
+          this.toppings.patchValue(ids);
         }
       });
     } catch (error) {
