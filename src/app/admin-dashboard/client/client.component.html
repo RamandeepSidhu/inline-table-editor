@@ -17,13 +17,15 @@
                     2?'Row':'Rows'}} Delete</button>
         </div>
         <div class="p-1 mb-1 d-flex">
-            <mat-form-field>
-                <!-- <mat-label>Toppings</mat-label> -->
-                <mat-select [formControl]="toppings" multiple #userColumnSelect>
-                    <mat-option *ngFor="let column of usersTableColumn" [value]="column" (onSelectionChange)="onChangeColumn($event, column)">{{column?.label}}</mat-option>
-                    <button mat-button type="button" (click)="disabledColumnField()" color="primary">Apply</button>
-                </mat-select>
-            </mat-form-field>
+            <div class="toggle">
+                <mat-form-field  [ngClass]="{'edit-off':'true'}">
+                    <!-- <mat-label>Toppings</mat-label> -->
+                    <mat-select [formControl]="toppings" multiple #userColumnSelect>
+                        <mat-option *ngFor="let column of usersTableColumn" [value]="column" (onSelectionChange)="onChangeColumn($event, column)">{{column?.label}}</mat-option>
+                        <button mat-button type="button" (click)="disabledColumnField()" color="primary">Apply</button>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
             <button type="button" class="btn btn-sm manageBtn" routerLink="/manage">Manage Records</button>
             <button class="btn btn-sm addNewRow ml-2" (click)="AddNewRow()">
@@ -38,9 +40,9 @@
             <ng-container formArrayName="VORows">
                 <table #table mat-table [dataSource]="dataSource" matSort>
                     <ng-container matColumnDef="action" sticky>
-                        <div class="d-flex">
+                        <div class="d-flex" >
                             <th mat-header-cell *matHeaderCellDef>
-                                <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                    <mat-checkbox  (change)="$event ? toggleAllRows() : null"
                                     [checked]="selection.hasValue() && isAllSelected()"
                                     [indeterminate]="selection.hasValue() && !isAllSelected()">
                                 </mat-checkbox>

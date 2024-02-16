@@ -201,3 +201,11 @@ a.linkedin-link.mdc-button {
     padding: 8px !important;
 }
 }
+.toggle {
+  margin-top: 24px;
+  position: relative;
+  right: 10px;
+  .mat-mdc-form-field{
+    border-bottom:1px solid #000;
+  }
+}
