@@ -81,6 +81,7 @@ export class ClientComponent implements AfterViewInit {
   'lead_score',
   'country',
   'conversion',
+  'date_time'
 ]; 
   displayedColumns: string[] = [];
   constructor(
@@ -132,6 +133,14 @@ export class ClientComponent implements AfterViewInit {
             ]),
             name: new FormControl(val.name, [Validators.required]),
             phone: new FormControl(val.phone),
+            time: new FormControl({
+              value: val.time,
+              disabled: true,
+            }),
+            date: new FormControl({
+              value: val.date,
+              disabled: true,
+            }),
             job_url: new FormControl(val.job_url),
             id: new FormControl(val._id),
             action: new FormControl('existingRecord'),
@@ -221,7 +230,8 @@ export class ClientComponent implements AfterViewInit {
     formdata.controls['country'].enable();
     formdata.controls['plateform'].enable();
     formdata.controls['lead_score'].enable();
-    // this.isEditableNew = true;
+    formdata.controls['time'].enable();
+    formdata.controls['date'].enable();
   }
 
   updateClient(VOFormElement: any, i: any) {
@@ -276,6 +286,10 @@ export class ClientComponent implements AfterViewInit {
       formData.get('email').patchValue(user.email);
       formData.get('phone').patchValue(user.phone);
       formData.get('linkedin').patchValue(user.linkedin);
+      formData.get('date').patchValue(user.date);
+      formData.get('time').patchValue(user.time);
+      formData.get('job_url').patchValue(user.job_url);
+      formData.get('conversion').patchValue(user.conversion);
     }
     this.formDisable(formData);
   }
@@ -313,7 +327,9 @@ export class ClientComponent implements AfterViewInit {
       country: new FormControl(''),
       plateform: new FormControl(''),
       lead_score: new FormControl(''),
-      conversions: new FormControl(''),
+      conversion: new FormControl(''),
+      date: new FormControl(''),
+      time: new FormControl(''),
       name: new FormControl('', [Validators.required]),
       phone: new FormControl(''),
       job_url: new FormControl(''),
@@ -362,6 +378,7 @@ export class ClientComponent implements AfterViewInit {
       return;
     }
     const formValue = formData.value;
+    console.log(formValue)
     this.isLoading = true;
     const payload = Object.keys(formValue)
       .filter((key) => formValue[key] !== '' && formValue[key] !== null)
