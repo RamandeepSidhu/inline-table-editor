@@ -53,7 +53,7 @@
 
 .edit-mode,
 .edit-off {
-    .mat-mdc-form-field-infix {
+  .mat-mdc-form-field-infix {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
   }
@@ -71,7 +71,6 @@
     display: flex !important;
     height: 0px !important;
   }
-
 }
 .mat-mdc-option.mdc-list-item {
   font-size: 13px !important;
@@ -184,28 +183,34 @@ a.linkedin-link.mdc-button {
     width: 99% !important;
   }
 }
-.all-data-removed{
- .mdc-checkbox__native-control{
+.all-data-removed {
+  .mdc-checkbox__native-control {
     margin: -14px !important;
   }
 }
 .mdc-text-field {
   padding: 0 1px !important;
 }
-  .mat-mdc-paginator .mat-mdc-select-value {
-    text-align: center !important;
-  }
+.mat-mdc-paginator .mat-mdc-select-value {
+  text-align: center !important;
+}
 
-.pagination{
+.pagination {
   .mat-mdc-select-arrow-wrapper {
     padding: 8px !important;
-}
+  }
 }
 .toggle {
-  margin-top: 24px;
+  margin-top: 1px;
   position: relative;
-  right: 10px;
-  .mat-mdc-form-field{
-    border-bottom:1px solid #000;
+  right: 15px;
+  .mat-mdc-select-value{
+    font-size: 14px;
   }
+.toggle-btn{
+  border:1px solid #cbbcbc;
+  padding: 4px;
+  height: 45px;
+  margin-top: 5px;
+}
 }

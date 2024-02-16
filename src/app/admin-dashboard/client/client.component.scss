@@ -91,3 +91,14 @@ button.removeRecords{
   padding: 4px;
   }
 }
+button.apply-btn.mdc-button {
+  background-color: #5d5fef;
+  color: #fff;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 0px 16px;
+  border-radius: 20px;
+  width: 80%;
+
+}
