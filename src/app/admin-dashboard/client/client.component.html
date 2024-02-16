@@ -27,7 +27,7 @@
                 </mat-form-field>
             </button>
         </div>
-            <button type="button" class="btn btn-sm manageBtn" routerLink="/manage">Manage Records</button>
+            <button type="button" class="btn btn-sm manageBtn"  (click)="openManageRecords()">Manage Records</button>
             <button class="btn btn-sm addNewRow ml-2" (click)="AddNewRow()">
                 <mat-icon class="add-button add-icon">add</mat-icon> Add New Record </button>
             <button type="button" (click)="openDialog('0ms', '0ms','logout')" class="btn-danger btn-sm login ml-2">

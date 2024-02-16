@@ -17,6 +17,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModelComponent } from '../confirmation-model/confirmation-model.component';
 import { MatSelect } from '@angular/material/select';
+import { ManageComponent } from '../manage/manage.component';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 export interface PeriodicElement {
   name: string;
@@ -27,6 +30,15 @@ export interface PeriodicElement {
   lead_score: string;
   country: string;
 }
+export const slideInAnimation = trigger('slideInAnimation', [
+  transition(':enter', [
+    style({ transform: 'translateX(-100%)' }),
+    animate('400ms ease-in', style({ transform: 'translateX(0%)' })),
+  ]),
+  transition(':leave', [
+    animate('400ms ease-out', style({ transform: 'translateX(-100%)' })),
+  ]),
+]);
 
 @Component({
   selector: 'app-client',
@@ -37,6 +49,7 @@ export class ClientComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatSelect) userColumnSelect!: MatSelect;
+  @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
   paginatorList!: HTMLCollectionOf<Element>;
   idx!: number;
   dataSource: any = new MatTableDataSource<any>();
@@ -74,7 +87,7 @@ export class ClientComponent implements AfterViewInit {
     private userServices: UserService,
     private toaster: ToastrService,
     private route: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -524,5 +537,19 @@ export class ClientComponent implements AfterViewInit {
         this.selectedColumns.push(column); 
       }
     }
+  }
+
+  openManageRecords(){
+    const dialogRef = this.dialog.open(ManageComponent, {
+      width: '500px',
+      height:'953px',
+      panelClass: 'custom-dialog-container', 
+      position: {
+        right: '0', 
+        top: '0',  
+      },
+      data: { animation: 'slideInAnimation' },
+    });
+    dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
   }
 }

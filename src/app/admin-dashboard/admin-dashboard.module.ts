@@ -26,15 +26,12 @@ import { ConfirmationModelComponent } from './confirmation-model/confirmation-mo
     AdminDashboardRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    DemoMaterialModule
-    // MatTableModule,
-    // MatPaginatorModule,
+    DemoMaterialModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [],
-  providers:[
+  providers:[DemoMaterialModule,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
-
   ]
 })
 export class AdminDashboardModule { }

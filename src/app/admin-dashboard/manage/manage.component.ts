@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/users.service';
@@ -19,11 +20,12 @@ export class ManageComponent {
   public isLoading = false;
   public submitted = false;
   private currentIndexToDelete: number | null = null;
+  @Output() manageRecords = new EventEmitter<void>();
   constructor(
     private userServices: UserService,
     private toaster: ToastrService,
     private formBuilder: FormBuilder,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) {}
   ngOnInit(): void {
     this.getData(this.title);
@@ -173,4 +175,5 @@ export class ManageComponent {
       this.currentIndexToDelete = null;
     }
   }
+
 }
