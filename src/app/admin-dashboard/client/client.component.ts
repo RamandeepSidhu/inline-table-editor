@@ -49,6 +49,7 @@ export class ClientComponent implements AfterViewInit {
   public countries: any = [];
   public leadScores: any = [];
   public plateforms: any = [];
+  public conversions: any = [];
   public pageSizeOptions:any =[];
   public submitted = false;
   public pageSize:number =10;
@@ -63,7 +64,9 @@ export class ClientComponent implements AfterViewInit {
   'linkedin',
   'plateform',
   'lead_score',
-  'country']; 
+  'country',
+  'conversion',
+]; 
   displayedColumns: string[] = [];
   constructor(
     private fb: FormBuilder,
@@ -314,6 +317,11 @@ export class ClientComponent implements AfterViewInit {
           this.plateforms = response.data;
         }
       });
+      this.userServices.getManageUser('conversion').subscribe((response: any) => {
+        if (response.status === true) {
+          this.conversions = response.data;
+        }
+      });
     } catch (error) {
       this.isLoading = false;
     }
@@ -493,6 +501,7 @@ export class ClientComponent implements AfterViewInit {
 
   onChangeColumn(event:any,column:any){
     if (event.isUserInput) {
+      console.log(column.title,'column.title')
       this.displayedColumnsName.filter((item:any) =>{
         if(item === column.title){
           const index = this.displayedColumns.indexOf(column.title);
