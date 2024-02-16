@@ -54,17 +54,17 @@ export class ClientComponent implements AfterViewInit {
   public pageSize:number =10;
   selection = new SelectionModel<PeriodicElement>(true, []);
   toppings = new FormControl();
-  selectedColumns: any[] = []; 
-  displayedColumns: string[] = [
-    'action',
-    'name',
-    'email',
-    'phone',
-    'linkedin',
-    'plateform',
-    'lead_score',
-    'country',
-  ];
+  selectedColumns: any[] = [];
+  displayedColumnsName: string[]=[ 
+  'action',
+  'name',
+  'email',
+  'phone',
+  'linkedin',
+  'plateform',
+  'lead_score',
+  'country']; 
+  displayedColumns: string[] = [];
   constructor(
     private fb: FormBuilder,
     private _formBuilder: FormBuilder,
@@ -167,6 +167,7 @@ export class ClientComponent implements AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.updateIndex();
+    this.selection.clear();
   }
 
   AddNewRow() {
@@ -389,7 +390,7 @@ export class ClientComponent implements AfterViewInit {
   }
   calculatePageSizeOptions() {
     this.pageSizeOptions =[];
-    const dataLength = this.dataSource.data.length;
+    let dataLength = this.dataSource.filteredData.length;
     const base = 2;
     let option = this.pageSize;
     while (option < dataLength) {
@@ -399,10 +400,9 @@ export class ClientComponent implements AfterViewInit {
     this.pageSizeOptions.push(dataLength);
   }
 
-
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource.filteredData.length;
     return numSelected === numRows;
   }
 
@@ -412,7 +412,7 @@ export class ClientComponent implements AfterViewInit {
       this.selection.clear();
       return;
     }
-    this.selection.select(...this.dataSource.data);
+    this.selection.select(...this.dataSource.filteredData);
   }
 
   multipleRecordDelete(){
@@ -445,8 +445,12 @@ export class ClientComponent implements AfterViewInit {
       this.userServices.getUserTableColumn().subscribe((response: any) => {
         if(response.status === true){
           this.usersTableColumn = response.data;
-          const ids = this.usersTableColumn.filter((e: any) => e.isVisible === true);
-          this.toppings.patchValue(ids);
+          const columns = this.usersTableColumn.filter((e: any) => e.isVisible === true);
+          const displayedColumns = columns.map((e:any)=>e.title);
+          let difference2 = displayedColumns.filter((item:any) => this.displayedColumnsName.includes(item));
+          difference2.unshift('action');
+          this.displayedColumns = difference2;
+          this.toppings.patchValue(columns);
         }
       });
     } catch (error) {
@@ -482,7 +486,6 @@ export class ClientComponent implements AfterViewInit {
       if (action === 'logout') {
         this.logout();
       } else if (action === 'remove') {
-        console.log(action)
         this.multipleRecordDelete();
       }
     });
@@ -490,6 +493,16 @@ export class ClientComponent implements AfterViewInit {
 
   onChangeColumn(event:any,column:any){
     if (event.isUserInput) {
+      this.displayedColumnsName.filter((item:any) =>{
+        if(item === column.title){
+          const index = this.displayedColumns.indexOf(column.title);
+          if (index !== -1) {
+            this.displayedColumns.splice(index, 1);
+          }else{
+            this.displayedColumns.push(column.title); 
+          }
+        }
+      });
       const index = this.selectedColumns.indexOf(column);
       if (index !== -1) {
         this.selectedColumns.splice(index, 1);
