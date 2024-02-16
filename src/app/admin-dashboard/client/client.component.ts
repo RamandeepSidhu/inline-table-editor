@@ -201,6 +201,7 @@ export class ClientComponent implements AfterViewInit {
       this.toaster.error('Please fill the first row', 'Error');
       return;
     }
+    this.submitted = false;
     const control = this.VOForm.get('VORows') as FormArray;
     control.insert(0, this.initiateVOForm());
     this.dataSource = new MatTableDataSource(control.controls);
