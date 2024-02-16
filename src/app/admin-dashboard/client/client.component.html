@@ -9,7 +9,7 @@
                     <span class="material-icons">search</span>
                 </div>
                 <mat-form-field [ngClass]="{'edit-off':'true'}" class="searchBox">
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input />
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input [(ngModel)]="searchValue"/>
                 </mat-form-field>
             </div>
             <button *ngIf="selection.hasValue()" (click)="openDialog('0ms', '0ms','remove')" type="button"
