@@ -225,9 +225,7 @@ export class ClientComponent implements AfterViewInit {
 
   // this function will enabled the select field for editd
   EditSVO(VOFormElement: any, i: any) {
-    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formdata = VOFormElement.get('VORows').at(i);
-    // VOFormElement.get('VORows').at(i).get('name').disabled(false)
     formdata.get('isEditable').patchValue(false);
     formdata.controls['country'].enable();
     formdata.controls['plateform'].enable();
@@ -238,7 +236,6 @@ export class ClientComponent implements AfterViewInit {
   }
 
   updateClient(VOFormElement: any, i: any) {
-    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if (!formData.valid) {
@@ -283,7 +280,6 @@ export class ClientComponent implements AfterViewInit {
 
   // On click of cancel button in the table (after click on edit) this method will call and reset the previous data
   CancelSVO(VOFormElement: any, i: any) {
-    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     const user = this.users[i];
     formData.get('isEditable').patchValue(true);
@@ -385,7 +381,6 @@ export class ClientComponent implements AfterViewInit {
   }
 
   addNewRecord(VOFormElement: any, i: any) {
-    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i);
     this.submitted = true;
     if (!formData.valid) {
@@ -434,7 +429,6 @@ export class ClientComponent implements AfterViewInit {
   }
 
   deleteUser(VOFormElement: any, i: any) {
-    // const i = this.dataSource.sortData(this.dataSource.filteredData,this.dataSource.sort).findIndex( (obj:any) => obj === element);
     const formData = VOFormElement.get('VORows').at(i).value;
     this.isLoading = true;
     this.userServices.removeUser(formData.id).subscribe((response: any) => {
@@ -612,5 +606,4 @@ export class ClientComponent implements AfterViewInit {
       event.preventDefault();
     }
   }
-
 }
