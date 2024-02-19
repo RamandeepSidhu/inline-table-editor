@@ -64,26 +64,26 @@ export class ClientComponent implements AfterViewInit {
   public leadScores: any = [];
   public plateforms: any = [];
   public conversions: any = [];
-  public pageSizeOptions:any =[];
+  public pageSizeOptions: any = [];
   public submitted = false;
-  public pageSize:number =10;
+  public pageSize: number = 10;
   selection = new SelectionModel<PeriodicElement>(true, []);
   toppings = new FormControl();
   selectedColumns: any[] = [];
   searchValue: string = '';
-  displayedColumnsName: string[]=[ 
-  'action',
-  'name',
-  'email',
-  'phone',
-  'linkedin',
-  'job_url',
-  'plateform',
-  'lead_score',
-  'country',
-  'conversion',
-  'date_time'
-]; 
+  displayedColumnsName: string[] = [
+    'action',
+    'name',
+    'email',
+    'phone',
+    'linkedin',
+    'job_url',
+    'plateform',
+    'lead_score',
+    'country',
+    'conversion',
+    'date_time'
+  ];
   displayedColumns: string[] = [];
   constructor(
     private fb: FormBuilder,
@@ -92,7 +92,7 @@ export class ClientComponent implements AfterViewInit {
     private toaster: ToastrService,
     private route: Router,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getManageData();
@@ -168,6 +168,7 @@ export class ClientComponent implements AfterViewInit {
       this.userServices.getUsers(params).subscribe((response: any) => {
         if (response.status === true) {
           this.users = response.data;
+          console.log(response.data)
           this.isLoading = false;
           this.formload();
           this.updateIndex();
@@ -231,6 +232,7 @@ export class ClientComponent implements AfterViewInit {
     formdata.controls['country'].enable();
     formdata.controls['plateform'].enable();
     formdata.controls['lead_score'].enable();
+    formdata.controls['conversion'].enable();
     formdata.controls['time'].enable();
     formdata.controls['date'].enable();
   }
@@ -244,14 +246,14 @@ export class ClientComponent implements AfterViewInit {
       return;
     }
     const formValue = formData.value;
-    if(formValue.date){
-      if(!formValue.time){
+    if (formValue.date) {
+      if (!formValue.time) {
         this.toaster.error('Please select the time', 'Error');
         return;
       }
     }
-    if(formValue.time){
-      if(!formValue.date){
+    if (formValue.time) {
+      if (!formValue.date) {
         this.toaster.error('Please select the date', 'Error');
         return;
       }
@@ -391,14 +393,14 @@ export class ClientComponent implements AfterViewInit {
       return;
     }
     const formValue = formData.value;
-    if(formValue.date){
-      if(!formValue.time){
+    if (formValue.date) {
+      if (!formValue.time) {
         this.toaster.error('Please select the time', 'Error');
         return;
       }
     }
-    if(formValue.time){
-      if(!formValue.date){
+    if (formValue.time) {
+      if (!formValue.date) {
         this.toaster.error('Please select the date', 'Error');
         return;
       }
@@ -465,7 +467,7 @@ export class ClientComponent implements AfterViewInit {
     this.route.navigate(['/login']);
   }
   calculatePageSizeOptions() {
-    this.pageSizeOptions =[];
+    this.pageSizeOptions = [];
     let dataLength = this.dataSource.filteredData.length;
     const base = 2;
     let option = this.pageSize;
@@ -491,17 +493,17 @@ export class ClientComponent implements AfterViewInit {
     this.selection.select(...this.dataSource.filteredData);
   }
 
-  multipleRecordDelete(){
-    const ids = this.selection.selected.map((e:any)=>e.value.id);
+  multipleRecordDelete() {
+    const ids = this.selection.selected.map((e: any) => e.value.id);
     this.isLoading = true;
     try {
-      this.userServices.multipleUsersDelete({ids:ids}).subscribe((response: any) => {
+      this.userServices.multipleUsersDelete({ ids: ids }).subscribe((response: any) => {
         this.isLoading = false;
-        if(response.status === true){
+        if (response.status === true) {
           this.toaster.success(response.message, 'Success');
           this.getUsers();
           this.selection.clear();
-          this.searchValue ='';
+          this.searchValue = '';
         }
       });
     } catch (error) {
@@ -509,22 +511,22 @@ export class ClientComponent implements AfterViewInit {
     }
   }
 
-  disabledColumnField(){
-    if(this.selectedColumns && this.selectedColumns.length !== 0){
-      this.updateColumnField({ fields:this.selectedColumns })
-    }else{
+  disabledColumnField() {
+    if (this.selectedColumns && this.selectedColumns.length !== 0) {
+      this.updateColumnField({ fields: this.selectedColumns })
+    } else {
       this.userColumnSelect.close();
     }
   }
 
-  fetchColumnField(){
+  fetchColumnField() {
     try {
       this.userServices.getUserTableColumn().subscribe((response: any) => {
-        if(response.status === true){
+        if (response.status === true) {
           this.usersTableColumn = response.data;
           const columns = this.usersTableColumn.filter((e: any) => e.isVisible === true);
-          const displayedColumns = columns.map((e:any)=>e.title);
-          let difference2 = displayedColumns.filter((item:any) => this.displayedColumnsName.includes(item));
+          const displayedColumns = columns.map((e: any) => e.title);
+          let difference2 = displayedColumns.filter((item: any) => this.displayedColumnsName.includes(item));
           difference2.unshift('action');
           this.displayedColumns = difference2;
           this.toppings.patchValue(columns);
@@ -535,15 +537,15 @@ export class ClientComponent implements AfterViewInit {
     }
   }
 
-  updateColumnField(data:any){
+  updateColumnField(data: any) {
     try {
       this.isLoading = true;
       this.userServices.updateUserTableColumn(data).subscribe((response: any) => {
         this.isLoading = false;
-        if(response.status === true){
+        if (response.status === true) {
           this.userColumnSelect.close();
           this.fetchColumnField();
-          this.selectedColumns =[];
+          this.selectedColumns = [];
         }
       });
     } catch (error) {
@@ -556,10 +558,9 @@ export class ClientComponent implements AfterViewInit {
       width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
-      // data: { action },
       data: { action, count: this.selection.selected.length },
     });
-  
+
     dialogRef.componentInstance.alert.subscribe(() => {
       if (action === 'logout') {
         this.logout();
@@ -569,39 +570,42 @@ export class ClientComponent implements AfterViewInit {
     });
   }
 
-  onChangeColumn(event:any,column:any){
+  onChangeColumn(event: any, column: any) {
     if (event.isUserInput) {
-      this.displayedColumnsName.filter((item:any) =>{
-        if(item === column.title){
+      this.displayedColumnsName.filter((item: any) => {
+        if (item === column.title) {
           const index = this.displayedColumns.indexOf(column.title);
           if (index !== -1) {
             this.displayedColumns.splice(index, 1);
-          }else{
-            this.displayedColumns.push(column.title); 
+          } else {
+            this.displayedColumns.push(column.title);
           }
         }
       });
       const index = this.selectedColumns.indexOf(column);
       if (index !== -1) {
         this.selectedColumns.splice(index, 1);
-      }else{
-        this.selectedColumns.push(column); 
+      } else {
+        this.selectedColumns.push(column);
       }
     }
   }
 
-  openManageRecords(){
+  openManageRecords() {
     const dialogRef = this.dialog.open(ManageComponent, {
       width: '500px',
-      height:'953px',
-      panelClass: 'custom-dialog-container', 
+      height: '953px',
+      panelClass: 'custom-dialog-container',
       position: {
-        right: '0', 
-        top: '0',  
+        right: '0',
+        top: '0',
       },
       data: { animation: 'slideInAnimation' },
     });
-    dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getManageData();
+    });
   }
   onClick(event: MouseEvent, url: string | undefined): void {
     if (!url) {
