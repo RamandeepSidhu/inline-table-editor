@@ -27,9 +27,9 @@
                 </mat-form-field>
             </button>
         </div>
-            <button type="button" class="btn btn-sm manageBtn"  (click)="openManageRecords()">Manage Records</button>
+            <button type="button" class="btn btn-sm manageBtn"  (click)="openManageRecords()"><span class="manageRecordBtn">Manage Records</span></button>
             <button class="btn btn-sm addNewRow ml-2" (click)="AddNewRow()">
-                <mat-icon class="add-button add-icon">add</mat-icon> Add New Record </button>
+                <mat-icon class="add-button add-icon">add</mat-icon> <span class="displayRecordBtn">Add New Record </span></button>
             <button type="button" (click)="openDialog('0ms', '0ms','logout')" class="btn-danger btn-sm login ml-2">
                 <span class="material-icons">logout</span><span class="logout">Logout</span>
             </button>
@@ -110,7 +110,7 @@
                                 [class.outline-appearance]="VOForm.get('VORows')?.value[element.index].isEditable"
                                 [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
                                 <input matInput type="text" formControlName="email" class="disbled-text" 
-                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable" 
+                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable"  
                                     />
                             </mat-form-field>
                             <mat-error *ngIf="submitted && errorMeessage(VOForm,i,'email','required')">The email field
@@ -143,7 +143,7 @@
                                 [href]="VOForm.get('VORows')?.value[element.index].linkedin"
                                 target="_blank"
                                 (click)="onClick($event, VOForm.get('VORows')?.value[element.index].linkedin)">
-                                {{ VOForm.get('VORows')?.value[element.index].linkedin }}
+                                <span class="shortened-link">{{ VOForm.get('VORows')?.value[element.index].linkedin }} </span>
                              </a>
                              
                             </ng-container>
@@ -168,8 +168,8 @@
                             <ng-container
                                 *ngIf="VOForm.get('VORows')?.value[element.index].isEditable; else editableModeUrl">
                                 <a class="linkedin-link" mat-button  (click)="onClick($event, VOForm.get('VORows')?.value[element.index].job_url)"
-                                    [href]="VOForm.get('VORows')?.value[element.index].job_url" target="_blank">{{
-                                    VOForm.get('VORows')?.value[element.index].job_url }}</a>
+                                    [href]="VOForm.get('VORows')?.value[element.index].job_url" target="_blank">
+                                  <span class="shortened-link"> {{VOForm.get('VORows')?.value[element.index].job_url }}</span> </a>
                             </ng-container>
                             <ng-template #editableModeUrl>
                                 <mat-form-field

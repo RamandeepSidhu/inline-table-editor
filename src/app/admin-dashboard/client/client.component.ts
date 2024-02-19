@@ -30,6 +30,7 @@ export interface PeriodicElement {
   lead_score: string;
   country: string;
 }
+
 export const slideInAnimation = trigger('slideInAnimation', [
   transition(':enter', [
     style({ transform: 'translateX(-100%)' }),
@@ -607,5 +608,5 @@ export class ClientComponent implements AfterViewInit {
       event.preventDefault();
     }
   }
-  
+
 }

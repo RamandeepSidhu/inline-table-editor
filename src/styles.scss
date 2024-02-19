@@ -173,6 +173,13 @@ a.linkedin-link.mdc-button {
   color: #007bff !important;
   z-index: 000;
   position: relative;
+  .shortened-link {
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 .search-bar {
   .mat-mdc-form-field-infix {
@@ -204,6 +211,9 @@ a.linkedin-link.mdc-button {
   margin-top: 1px;
   position: relative;
   right: 15px;
+  @media (max-width: 767px) {
+    right: 45x;  
+}
   .mat-mdc-select-value {
     font-size: 14px;
   }
