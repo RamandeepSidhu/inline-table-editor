@@ -555,7 +555,8 @@ export class ClientComponent implements AfterViewInit {
       width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
-      data: { action },
+      // data: { action },
+      data: { action, count: this.selection.selected.length },
     });
   
     dialogRef.componentInstance.alert.subscribe(() => {

@@ -4,8 +4,9 @@
     Are you sure you want to log out?
   </ng-container>
   <ng-template #removeContent>
-    Do you really want to delete these records?
-  </ng-template>
+    <h4 *ngIf="data.count === 1">Do you really want to delete this record?</h4>
+    <h4 *ngIf="data.count > 1">Do you really want to delete these records?</h4> 
+   </ng-template>
 </mat-dialog-content>
 
 <div class="confirmation-btn">
