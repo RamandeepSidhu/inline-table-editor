@@ -253,9 +253,11 @@ button.mat-calendar-body-cell.mat-calendar-body-active {
   outline: none;
 }
 .mdc-icon-button{
-  --mat-mdc-button-persistent-ripple-color: #fff !important; 
-  --mat-mdc-button-ripple-color: rgb(255 255 255 / 10%) !important; 
   &:focus{
     outline: 0 !important;
   }
+}
+.mat-mdc-button, .mat-mdc-outlined-button:hover {
+  --mat-mdc-button-persistent-ripple-color: #fff !important;
+  --mat-mdc-button-ripple-color:none !important;
 }
