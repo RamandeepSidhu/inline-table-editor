@@ -606,4 +606,11 @@ export class ClientComponent implements AfterViewInit {
       event.preventDefault();
     }
   }
+  isNumber(event: KeyboardEvent) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
 }

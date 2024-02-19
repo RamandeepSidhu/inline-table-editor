@@ -110,8 +110,7 @@
                                 [class.outline-appearance]="VOForm.get('VORows')?.value[element.index].isEditable"
                                 [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
                                 <input matInput type="text" formControlName="email" class="disbled-text" 
-                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable"  
-                                    />
+                                    [readonly]="VOForm.get('VORows')?.value[element.index].isEditable"/> 
                             </mat-form-field>
                             <mat-error *ngIf="submitted && errorMeessage(VOForm,i,'email','required')">The email field
                                 is required</mat-error>
@@ -129,7 +128,7 @@
                                 [class.legacy-appearance]="!VOForm.get('VORows')?.value[element.index].isEditable">
                                 <input matInput type="text" formControlName="phone"
                                     [readonly]="VOForm.get('VORows')?.value[element.index].isEditable"
-                                    [maxlength]="10" />
+                                    [maxlength]="10" (keypress)="isNumber($event)"/>
                             </mat-form-field>
                         </td>
                     </ng-container>
@@ -143,7 +142,7 @@
                                 [href]="VOForm.get('VORows')?.value[element.index].linkedin"
                                 target="_blank"
                                 (click)="onClick($event, VOForm.get('VORows')?.value[element.index].linkedin)">
-                                <span class="shortened-link">{{ VOForm.get('VORows')?.value[element.index].linkedin }} </span>
+                                <span class="shortened-link" [matTooltip]="VOForm.get('VORows')?.value[element.index].linkedin" [matTooltipPosition]="'right'">{{ VOForm.get('VORows')?.value[element.index].linkedin }} </span>
                              </a>
                              
                             </ng-container>
@@ -169,7 +168,7 @@
                                 *ngIf="VOForm.get('VORows')?.value[element.index].isEditable; else editableModeUrl">
                                 <a class="linkedin-link" mat-button  (click)="onClick($event, VOForm.get('VORows')?.value[element.index].job_url)"
                                     [href]="VOForm.get('VORows')?.value[element.index].job_url" target="_blank">
-                                  <span class="shortened-link"> {{VOForm.get('VORows')?.value[element.index].job_url }}</span> </a>
+                                  <span class="shortened-link" [matTooltip]="VOForm.get('VORows')?.value[element.index].job_url" [matTooltipPosition]="'left'"> {{VOForm.get('VORows')?.value[element.index].job_url }}</span> </a>
                             </ng-container>
                             <ng-template #editableModeUrl>
                                 <mat-form-field
