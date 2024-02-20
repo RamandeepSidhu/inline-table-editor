@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
             }
           }
           else {
+            this.isLoading = false;
             this.toaster.error(response.message, 'Error');
           }
         }

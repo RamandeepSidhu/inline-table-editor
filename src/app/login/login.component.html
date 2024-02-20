@@ -39,9 +39,12 @@
                     long </div>
             </div>
         </div>
-        <button type="submit" [disabled]="loginForm.invalid"
-            class="btn submit-button">Sign in</button>
+        <button type="submit" [disabled]="loginForm.invalid || isLoading" class="btn submit-button">
+      <div class="spinner-border" role="status" *ngIf="isLoading">
+        <span class="sr-only"></span>
+      </div>
+      <span *ngIf="!isLoading">Sign in</span>
+      </button>
     </form>
-  
     </div>
   </div>
