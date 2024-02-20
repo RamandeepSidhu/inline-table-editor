@@ -266,3 +266,6 @@ button.mat-calendar-body-cell.mat-calendar-body-active {
   --mat-mdc-button-persistent-ripple-color: none !important;
   --mat-mdc-button-ripple-color: none !important;
 }
+.btn.focus, .btn:focus {
+ box-shadow: none !important
+}

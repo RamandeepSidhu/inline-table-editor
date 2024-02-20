@@ -7,6 +7,9 @@
         outline: none; 
        }
     }
+    li.nav-item {
+      margin: 0px 4px 0px 0px;
+    }
   }
   button.createButton {
     display: flex;
@@ -27,7 +30,7 @@
   .message{
     font-weight: 500;
   }
-  li.nav-item {
-    margin: 0px 4px 0px 0px;
+  button.close{
+    outline: 0;
   }
 }
