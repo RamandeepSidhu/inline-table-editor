@@ -252,7 +252,8 @@ mat-form-field.mat-mdc-form-field.mat-mdc-form-field-type-mat-input.mat-form-fie
 button.mat-calendar-body-cell.mat-calendar-body-active {
   outline: none;
 }
-.mdc-icon-button{
+.mat-mdc-icon-button {
+  --mat-mdc-button-persistent-ripple-color: #f5f5f5;
   &:focus{
     outline: 0 !important;
   }

@@ -168,7 +168,6 @@ export class ClientComponent implements AfterViewInit {
       this.userServices.getUsers(params).subscribe((response: any) => {
         if (response.status === true) {
           this.users = response.data;
-          console.log(response.data)
           this.isLoading = false;
           this.formload();
           this.updateIndex();
@@ -400,7 +399,6 @@ export class ClientComponent implements AfterViewInit {
         return;
       }
     }
-    console.log(formValue)
     this.isLoading = true;
     const payload = Object.keys(formValue)
       .filter((key) => formValue[key] !== '' && formValue[key] !== null)
